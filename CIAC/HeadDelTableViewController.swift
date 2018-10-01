@@ -36,12 +36,11 @@ class HeadDelTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return 2
     }
 
     
     @IBAction func close(_ sender: Any) {
-        print("close")
         dismiss(animated: true, completion: nil)
     }
     
@@ -59,7 +58,7 @@ class HeadDelTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             performSegue(withIdentifier: "showSecretariatInfo", sender: self)
-        } else if indexPath.row == 0 {
+        } else if indexPath.row == 1 {
             performSegue(withIdentifier: "showHeadDelMeetings", sender: self)
         }
     }

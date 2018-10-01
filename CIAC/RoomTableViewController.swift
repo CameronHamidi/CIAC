@@ -107,7 +107,7 @@ class RoomTableViewController: UITableViewController {
         task.resume()
     }
     
-    func scrapeRooms() -> [String] {
+    /*func scrapeRooms() -> [String] {
         let config = URLSessionConfiguration.default
         //config.waitsForConnectivity = true
         let defaultSession = URLSession(configuration: config)
@@ -141,6 +141,7 @@ class RoomTableViewController: UITableViewController {
         task.resume()
         return readRooms
     }
+ */
     
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true, completion: nil)

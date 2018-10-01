@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF12AEF0AE258E1E76AEF68E /* Pods_CIAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51103425103186E5A95DCD40 /* Pods_CIAC.framework */; };
+		E67CAB252162C7BD00D2F13B /* MeetingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */; };
 		E6CA0D46215DA869006C271C /* EventItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D39215DA868006C271C /* EventItem.swift */; };
 		E6CA0D48215DA869006C271C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D3B215DA868006C271C /* ViewController.swift */; };
 		E6CA0D4A215DA869006C271C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D3D215DA868006C271C /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		51103425103186E5A95DCD40 /* Pods_CIAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailViewController.swift; sourceTree = "<group>"; };
 		E6CA0CF9215DA70B006C271C /* CIAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6CA0D39215DA868006C271C /* EventItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItem.swift; sourceTree = "<group>"; };
 		E6CA0D3B215DA868006C271C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				E6CA0D41215DA869006C271C /* SecretariatInfoViewController.swift */,
 				E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */,
 				E6F57B202161D1C7006F00C0 /* MeetingItem.swift */,
+				E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */,
 				E6CA0D3D215DA868006C271C /* Assets.xcassets */,
 				E6CA0D43215DA869006C271C /* Info.plist */,
 			);
@@ -238,6 +241,7 @@
 				E6CA0D4F215DA869006C271C /* AppDelegate.swift in Sources */,
 				E6CA0D48215DA869006C271C /* ViewController.swift in Sources */,
 				E6CA0D46215DA869006C271C /* EventItem.swift in Sources */,
+				E67CAB252162C7BD00D2F13B /* MeetingDetailViewController.swift in Sources */,
 				E6CA0D4D215DA869006C271C /* ScheduleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

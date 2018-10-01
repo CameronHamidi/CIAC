@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Alamofire
+import Alamofire
 
 class ViewController: UIViewController {
 
@@ -56,6 +56,7 @@ class ViewController: UIViewController {
         } else if segue.identifier == "showHeadDelTableView" {
             print("prepare")
         }
+        //super.prepare(for: segue, sender: sender)
     }
     
     override func viewDidLoad() {
