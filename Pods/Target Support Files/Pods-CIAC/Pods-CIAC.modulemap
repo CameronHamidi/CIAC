@@ -1,0 +1,6 @@
+framework module Pods_CIAC {
+  umbrella header "Pods-CIAC-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,211 @@
+//
+//  ScheduleTableViewController.swift
+//  CIAC
+//
+//  Created by Cameron Hamidi on 9/1/18.
+//  Copyright © 2018 Cornell International Affairs Conference. All rights reserved.
+//
+
+import UIKit
+import Foundation
+
+class ScheduleTableViewController: UITableViewController {
+
+    var schedule: [DayItem]
+    var displayDay: Int
+    var numDays: Int?
+    @IBOutlet weak var prevDayButton: UIBarButtonItem!
+    @IBOutlet weak var nextDayButton: UIBarButtonItem!
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //schedule = scrapeSchedule()
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)//action: #selector(addTapped))
+        navigationController!.toolbarItems = [add]
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.displayDay = 0
+        self.schedule = [DayItem]()
+        self.numDays = 0
+        super.init(coder: aDecoder)
+        refresh(self)
+    }
+    
+    func reloadData() {
+        tableView.reloadData()
+        if schedule.count != 0 {
+            self.navigationItem.title = self.schedule[self.displayDay].day
+        }
+    }
+    
+    func configureDayButtons() {
+        if schedule.count == 0 {
+            prevDayButton.isEnabled = false
+            nextDayButton.isEnabled = false
+        } else {
+            if displayDay == 0 {
+                prevDayButton.isEnabled = false
+            } else {
+                prevDayButton.isEnabled = true
+            }
+            
+            if displayDay == numDays! - 1 {
+                nextDayButton.isEnabled = false
+            } else {
+                nextDayButton.isEnabled = true
+            }
+        }
+    }
+    
+    @IBAction func prevDay(_ sender: Any) {
+        if displayDay != 0 {
+            displayDay -= 1
+            configureDayButtons()
+            reloadData()
+        }
+    }
+    
+    @IBAction func nextDay(_ sender: Any) {
+        if displayDay != numDays! - 1 {
+            displayDay += 1
+            configureDayButtons()
+            reloadData()
+        }
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        if schedule.count != 0 {
+            return schedule[displayDay].events.count
+        } else {
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let dayItem = schedule[displayDay]
+        let eventItem = dayItem.events[indexPath.row]
+        let identifier = eventItem.identifier
+        let eventOrTimeText = eventItem.event
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        let label = cell.viewWithTag(1000) as! UILabel
+        label.text = eventOrTimeText
+        if identifier == "event" {
+            label.adjustsFontSizeToFitWidth = true
+        } else if identifier == "time" {
+           label.sizeToFit()
+        }
+        
+        return cell
+        
+    }
+
+    @IBAction func close(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func refresh(_ sender: Any) {
+        scrapeSchedule { schedule in
+            self.schedule = schedule
+            DispatchQueue.main.async {
+                self.reloadData()
+                self.numDays = self.schedule.count
+                self.configureDayButtons()
+            }
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       // if schedule.
+        if schedule.count != 0 {
+            let event = schedule[displayDay].events[indexPath.row]
+            if event.identifier == "time" && event.event.count > 51 {
+                print("75")
+                return 75
+            } else if event.identifier == "time" && event.event.count > 31 {
+                let additionalChars = event.event.count - 31
+                var quotient: Float = Float(additionalChars) / 20.0
+                quotient = quotient.rounded(.up)
+                print(event.event)
+                print(CGFloat(quotient * 14 + 40))
+                return CGFloat(quotient * 14 + 50)
+            }
+        }
+        return 44
+    }
+    
+    func scrapeSchedule(completion: @escaping ([DayItem]) -> Void) {
+        let config = URLSessionConfiguration.default
+        //config.waitsForConnectivity = true
+        let defaultSession = URLSession(configuration: config)
+        let url = URL(string: "https://www.ciaconline.org/assets/schedule.json")
+        let request = NSMutableURLRequest(url: url!)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        var schedule = [DayItem]()
+        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+            do {
+                if let error = error {
+                    print(error.localizedDescription)
+                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                    let scheduleArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
+                    for i in 0..<scheduleArray!.count {
+                        schedule.append(self.organizeScheduleJSON(scheduleJSON: scheduleArray![i], dayIndex: i))
+                    }
+                    completion(schedule)
+                }
+            }
+            catch { print("Scrape schedule error")}
+        }
+        task.resume()
+        //return schedule
+    }
+
+    func organizeScheduleJSON(scheduleJSON: [String: Any], dayIndex: Int) -> DayItem {
+        let returnDayItem = DayItem()
+        returnDayItem.day = scheduleJSON["day"] as! String
+        let eventTimesArray = scheduleJSON["eventTimes"] as! [[String : Any]]
+        for event in eventTimesArray {
+            let eventName = event["event"] as! String
+            returnDayItem.events.append(EventItem(event: eventName, identifier: "event"))
+            let timesArray = event["times"] as! [String]
+            for time in timesArray {
+                let timeEventItem = EventItem(event: time, identifier: "time")
+                returnDayItem.events.append(timeEventItem)
+            }
+        }
+        return returnDayItem
+    }
+}
+
+func neworganizeScheduleJSON(scheduleJSON: [String: Any], dayIndex: Int) -> DayItem {
+    let returnDayItem = DayItem()
+    returnDayItem.day = scheduleJSON["day"] as! String
+    let eventTimesArray = scheduleJSON["eventTimes"] as! [[String : Any]]
+    for event in eventTimesArray {
+        let eventName = event["event"] as! String
+        returnDayItem.events.append(EventItem(event: eventName, identifier: "event"))
+        let timesArray = event["times"] as! [String]
+        for time in timesArray {
+            let timeEventItem = EventItem(event: time, identifier: "time")
+            returnDayItem.events.append(timeEventItem)
+        }
+    }
+    return returnDayItem
+}

@@ -7,21 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E6CA0CFD215DA70B006C271C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0CFC215DA70B006C271C /* AppDelegate.swift */; };
-		E6CA0CFF215DA70B006C271C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0CFE215DA70B006C271C /* ViewController.swift */; };
-		E6CA0D02215DA70B006C271C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D00215DA70B006C271C /* Main.storyboard */; };
-		E6CA0D04215DA70E006C271C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D03215DA70E006C271C /* Assets.xcassets */; };
-		E6CA0D07215DA70E006C271C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D05215DA70E006C271C /* LaunchScreen.storyboard */; };
+		AF12AEF0AE258E1E76AEF68E /* Pods_CIAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51103425103186E5A95DCD40 /* Pods_CIAC.framework */; };
+		E6CA0D46215DA869006C271C /* EventItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D39215DA868006C271C /* EventItem.swift */; };
+		E6CA0D48215DA869006C271C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D3B215DA868006C271C /* ViewController.swift */; };
+		E6CA0D4A215DA869006C271C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D3D215DA868006C271C /* Assets.xcassets */; };
+		E6CA0D4C215DA869006C271C /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D3F215DA868006C271C /* RoomTableViewController.swift */; };
+		E6CA0D4D215DA869006C271C /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D40215DA868006C271C /* ScheduleTableViewController.swift */; };
+		E6CA0D4E215DA869006C271C /* SecretariatInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D41215DA869006C271C /* SecretariatInfoViewController.swift */; };
+		E6CA0D4F215DA869006C271C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D42215DA869006C271C /* AppDelegate.swift */; };
+		E6CA0D50215DA869006C271C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D43215DA869006C271C /* Info.plist */; };
+		E6CA0D57215DAAFB006C271C /* HeadDelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D55215DAAFB006C271C /* HeadDelTableViewController.swift */; };
+		E6CA0D58215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D56215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift */; };
+		E6CA0D5D215DABD7006C271C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D59215DABD7006C271C /* Main.storyboard */; };
+		E6CA0D5E215DABD7006C271C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */; };
+		E6F57B1F2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */; };
+		E6F57B212161D1C7006F00C0 /* MeetingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F57B202161D1C7006F00C0 /* MeetingItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51103425103186E5A95DCD40 /* Pods_CIAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6CA0CF9215DA70B006C271C /* CIAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6CA0CFC215DA70B006C271C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E6CA0CFE215DA70B006C271C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E6CA0D01215DA70B006C271C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E6CA0D03215DA70E006C271C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E6CA0D06215DA70E006C271C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E6CA0D08215DA70E006C271C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6CA0D39215DA868006C271C /* EventItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItem.swift; sourceTree = "<group>"; };
+		E6CA0D3B215DA868006C271C /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E6CA0D3D215DA868006C271C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E6CA0D3F215DA868006C271C /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
+		E6CA0D40215DA868006C271C /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
+		E6CA0D41215DA869006C271C /* SecretariatInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretariatInfoViewController.swift; sourceTree = "<group>"; };
+		E6CA0D42215DA869006C271C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E6CA0D43215DA869006C271C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6CA0D55215DAAFB006C271C /* HeadDelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadDelTableViewController.swift; sourceTree = "<group>"; };
+		E6CA0D56215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadDelPasswordEnterViewController.swift; sourceTree = "<group>"; };
+		E6CA0D5A215DABD7006C271C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E6CA0D5C215DABD7006C271C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadDelMeetingsTableViewController.swift; sourceTree = "<group>"; };
+		E6F57B202161D1C7006F00C0 /* MeetingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingItem.swift; sourceTree = "<group>"; };
+		F458C5B17EB3E969426F9B3E /* Pods-CIAC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIAC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIAC/Pods-CIAC.debug.xcconfig"; sourceTree = "<group>"; };
+		F6EF23CF846A665F88D2BBBC /* Pods-CIAC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIAC.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIAC/Pods-CIAC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +50,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF12AEF0AE258E1E76AEF68E /* Pods_CIAC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97BE52415BB38EA54B8FC252 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				51103425103186E5A95DCD40 /* Pods_CIAC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AFE79099200E8CA17B9B7C23 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F458C5B17EB3E969426F9B3E /* Pods-CIAC.debug.xcconfig */,
+				F6EF23CF846A665F88D2BBBC /* Pods-CIAC.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E6CA0CF0215DA70B006C271C = {
 			isa = PBXGroup;
 			children = (
 				E6CA0CFB215DA70B006C271C /* CIAC */,
 				E6CA0CFA215DA70B006C271C /* Products */,
+				AFE79099200E8CA17B9B7C23 /* Pods */,
+				97BE52415BB38EA54B8FC252 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +95,20 @@
 		E6CA0CFB215DA70B006C271C /* CIAC */ = {
 			isa = PBXGroup;
 			children = (
-				E6CA0CFC215DA70B006C271C /* AppDelegate.swift */,
-				E6CA0CFE215DA70B006C271C /* ViewController.swift */,
-				E6CA0D00215DA70B006C271C /* Main.storyboard */,
-				E6CA0D03215DA70E006C271C /* Assets.xcassets */,
-				E6CA0D05215DA70E006C271C /* LaunchScreen.storyboard */,
-				E6CA0D08215DA70E006C271C /* Info.plist */,
+				E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */,
+				E6CA0D59215DABD7006C271C /* Main.storyboard */,
+				E6CA0D42215DA869006C271C /* AppDelegate.swift */,
+				E6CA0D3B215DA868006C271C /* ViewController.swift */,
+				E6CA0D3F215DA868006C271C /* RoomTableViewController.swift */,
+				E6CA0D40215DA868006C271C /* ScheduleTableViewController.swift */,
+				E6CA0D39215DA868006C271C /* EventItem.swift */,
+				E6CA0D56215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift */,
+				E6CA0D55215DAAFB006C271C /* HeadDelTableViewController.swift */,
+				E6CA0D41215DA869006C271C /* SecretariatInfoViewController.swift */,
+				E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */,
+				E6F57B202161D1C7006F00C0 /* MeetingItem.swift */,
+				E6CA0D3D215DA868006C271C /* Assets.xcassets */,
+				E6CA0D43215DA869006C271C /* Info.plist */,
 			);
 			path = CIAC;
 			sourceTree = "<group>";
@@ -71,9 +120,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6CA0D0B215DA70E006C271C /* Build configuration list for PBXNativeTarget "CIAC" */;
 			buildPhases = (
+				6F632CF60308F14BEDFA4A5A /* [CP] Check Pods Manifest.lock */,
 				E6CA0CF5215DA70B006C271C /* Sources */,
 				E6CA0CF6215DA70B006C271C /* Frameworks */,
 				E6CA0CF7215DA70B006C271C /* Resources */,
+				2A2F25D48D63332E424C4AFF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +147,7 @@
 				TargetAttributes = {
 					E6CA0CF8215DA70B006C271C = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 0940;
 					};
 				};
 			};
@@ -122,39 +174,89 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6CA0D07215DA70E006C271C /* LaunchScreen.storyboard in Resources */,
-				E6CA0D04215DA70E006C271C /* Assets.xcassets in Resources */,
-				E6CA0D02215DA70B006C271C /* Main.storyboard in Resources */,
+				E6CA0D5D215DABD7006C271C /* Main.storyboard in Resources */,
+				E6CA0D5E215DABD7006C271C /* LaunchScreen.storyboard in Resources */,
+				E6CA0D50215DA869006C271C /* Info.plist in Resources */,
+				E6CA0D4A215DA869006C271C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2A2F25D48D63332E424C4AFF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CIAC/Pods-CIAC-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIAC/Pods-CIAC-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F632CF60308F14BEDFA4A5A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CIAC-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E6CA0CF5215DA70B006C271C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6CA0CFF215DA70B006C271C /* ViewController.swift in Sources */,
-				E6CA0CFD215DA70B006C271C /* AppDelegate.swift in Sources */,
+				E6CA0D58215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift in Sources */,
+				E6CA0D4E215DA869006C271C /* SecretariatInfoViewController.swift in Sources */,
+				E6F57B1F2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift in Sources */,
+				E6CA0D4C215DA869006C271C /* RoomTableViewController.swift in Sources */,
+				E6F57B212161D1C7006F00C0 /* MeetingItem.swift in Sources */,
+				E6CA0D57215DAAFB006C271C /* HeadDelTableViewController.swift in Sources */,
+				E6CA0D4F215DA869006C271C /* AppDelegate.swift in Sources */,
+				E6CA0D48215DA869006C271C /* ViewController.swift in Sources */,
+				E6CA0D46215DA869006C271C /* EventItem.swift in Sources */,
+				E6CA0D4D215DA869006C271C /* ScheduleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E6CA0D00215DA70B006C271C /* Main.storyboard */ = {
+		E6CA0D59215DABD7006C271C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E6CA0D01215DA70B006C271C /* Base */,
+				E6CA0D5A215DABD7006C271C /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		E6CA0D05215DA70E006C271C /* LaunchScreen.storyboard */ = {
+		E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E6CA0D06215DA70E006C271C /* Base */,
+				E6CA0D5C215DABD7006C271C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -278,37 +380,48 @@
 		};
 		E6CA0D0C215DA70E006C271C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F458C5B17EB3E969426F9B3E /* Pods-CIAC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cameron Hamidi (YMHFH3W9ZP)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = LL74343538;
 				INFOPLIST_FILE = CIAC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = CIACDistributionProfile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		E6CA0D0D215DA70E006C271C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6EF23CF846A665F88D2BBBC /* Pods-CIAC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cameron Hamidi (LL74343538)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = LL74343538;
 				INFOPLIST_FILE = CIAC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = CIACDistributionProfile;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
