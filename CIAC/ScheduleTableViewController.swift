@@ -107,7 +107,7 @@ class ScheduleTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = eventOrTimeText
-        if identifier == "event" {
+        if identifier == "event" || identifier == "eventDDI" {
             label.adjustsFontSizeToFitWidth = true
         } else if identifier == "time" {
            label.sizeToFit()
@@ -115,6 +115,21 @@ class ScheduleTableViewController: UITableViewController {
         
         return cell
         
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        self.tableView(self.tableView, didSelectRowAt: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if schedule[displayDay].events[indexPath.row].information != nil {
+            let message = schedule[displayDay].events[indexPath.row].information
+            let alert = UIAlertController(title: schedule[displayDay].events[indexPath.row].event, message: message, preferredStyle: .alert)
+            let action = UIAlertAction(title: "Close", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
     }
 
     @IBAction func close(_ sender: Any) {
@@ -183,7 +198,9 @@ class ScheduleTableViewController: UITableViewController {
         let eventTimesArray = scheduleJSON["eventTimes"] as! [[String : Any]]
         for event in eventTimesArray {
             let eventName = event["event"] as! String
-            returnDayItem.events.append(EventItem(event: eventName, identifier: "event"))
+            let eventInfo = event["information"] as! String?
+            let eventIdentifier = (eventInfo != nil ? "eventDDI" : "event")
+            returnDayItem.events.append(EventItem(event: eventName, identifier: eventIdentifier, information: eventInfo))
             let timesArray = event["times"] as! [String]
             for time in timesArray {
                 let timeEventItem = EventItem(event: time, identifier: "time")

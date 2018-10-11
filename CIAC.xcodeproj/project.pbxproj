@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AF12AEF0AE258E1E76AEF68E /* Pods_CIAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51103425103186E5A95DCD40 /* Pods_CIAC.framework */; };
+		E6277374216ECB1F007FD0FB /* RefinedRoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6277373216ECB1F007FD0FB /* RefinedRoomTableViewController.swift */; };
+		E6761FDA2166D0C5003CD4F8 /* RoomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6761FD92166D0C5003CD4F8 /* RoomItem.swift */; };
 		E67CAB252162C7BD00D2F13B /* MeetingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */; };
 		E6CA0D46215DA869006C271C /* EventItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D39215DA868006C271C /* EventItem.swift */; };
 		E6CA0D48215DA869006C271C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA0D3B215DA868006C271C /* ViewController.swift */; };
@@ -27,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		51103425103186E5A95DCD40 /* Pods_CIAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6277373216ECB1F007FD0FB /* RefinedRoomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinedRoomTableViewController.swift; sourceTree = "<group>"; };
+		E6761FD92166D0C5003CD4F8 /* RoomItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomItem.swift; sourceTree = "<group>"; };
 		E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailViewController.swift; sourceTree = "<group>"; };
 		E6CA0CF9215DA70B006C271C /* CIAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6CA0D39215DA868006C271C /* EventItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItem.swift; sourceTree = "<group>"; };
@@ -99,9 +103,11 @@
 			children = (
 				E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */,
 				E6CA0D59215DABD7006C271C /* Main.storyboard */,
+				E6277373216ECB1F007FD0FB /* RefinedRoomTableViewController.swift */,
 				E6CA0D42215DA869006C271C /* AppDelegate.swift */,
 				E6CA0D3B215DA868006C271C /* ViewController.swift */,
 				E6CA0D3F215DA868006C271C /* RoomTableViewController.swift */,
+				E6761FD92166D0C5003CD4F8 /* RoomItem.swift */,
 				E6CA0D40215DA868006C271C /* ScheduleTableViewController.swift */,
 				E6CA0D39215DA868006C271C /* EventItem.swift */,
 				E6CA0D56215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift */,
@@ -234,9 +240,11 @@
 			files = (
 				E6CA0D58215DAAFB006C271C /* HeadDelPasswordEnterViewController.swift in Sources */,
 				E6CA0D4E215DA869006C271C /* SecretariatInfoViewController.swift in Sources */,
+				E6277374216ECB1F007FD0FB /* RefinedRoomTableViewController.swift in Sources */,
 				E6F57B1F2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift in Sources */,
 				E6CA0D4C215DA869006C271C /* RoomTableViewController.swift in Sources */,
 				E6F57B212161D1C7006F00C0 /* MeetingItem.swift in Sources */,
+				E6761FDA2166D0C5003CD4F8 /* RoomItem.swift in Sources */,
 				E6CA0D57215DAAFB006C271C /* HeadDelTableViewController.swift in Sources */,
 				E6CA0D4F215DA869006C271C /* AppDelegate.swift in Sources */,
 				E6CA0D48215DA869006C271C /* ViewController.swift in Sources */,
@@ -399,7 +407,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = CIACDistributionProfile;
+				PROVISIONING_PROFILE_SPECIFIER = CIACDevelopmentProfile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -423,6 +431,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e475f322-07eb-4df8-866e-64cc8f91866c";
 				PROVISIONING_PROFILE_SPECIFIER = CIACDistributionProfile;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
