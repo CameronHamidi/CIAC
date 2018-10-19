@@ -10,10 +10,12 @@ import Foundation
 
 class RoomItem {
     var committee: String
-    var room: String
+    var image: String
+    var rooms: [String]
     
-    init(committee: String, room: String) {
+    init(committee: String, image: String, rooms: [String]) {
         self.committee = committee
-        self.room = room
+        self.image = image
+        self.rooms = rooms
     }
 }
