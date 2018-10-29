@@ -1,5 +1,5 @@
 //
-//  HeadDelPasswordEnterViewController.swift
+//  PasswordEnterViewController.swift
 //  CIAC
 //
 //  Created by Cameron Hamidi on 9/7/18.
@@ -8,15 +8,18 @@
 
 import UIKit
 
-protocol EnterHeadDelPassword: class {
-    func enterHeadDelPassword(enterPassword: String, correctPassword: Bool)
+protocol EnterPassword: class {
+    func enterPassword(enterPassword: String, correctPassword: Bool, passwordType: String)
 }
 
-class HeadDelPasswordEnterViewController: UIViewController {
+class PasswordEnterViewController: UIViewController {
 
-    var delegate: ViewController?
+    var viewControllerDelegate: ViewController?
     var correctPassword: String?
+    var passwordType: String?
     
+    
+    @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordEnterField: UITextField!
     
     @IBAction func cancel(_ sender: Any) {
@@ -26,7 +29,9 @@ class HeadDelPasswordEnterViewController: UIViewController {
     @IBAction func done(_ sender: Any) {
         print("button press: \(correctPassword!)")
         if passwordEnterField.text == correctPassword! {
-            delegate?.enterHeadDelPassword(enterPassword: passwordEnterField.text!, correctPassword: true)
+            if viewControllerDelegate != nil {
+                viewControllerDelegate!.enterPassword(enterPassword: passwordEnterField.text!, correctPassword: true, passwordType: passwordType!)
+            }
             dismiss(animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Incorrect Password", message: "Please enter the correct password. If you have forgotten the password, contact the Secretary-General or Director-General", preferredStyle: .alert)
@@ -42,7 +47,7 @@ class HeadDelPasswordEnterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("correct : \(correctPassword!)")
+        passwordLabel.text = "Enter the \(passwordType!) password:"
         // Do any additional setup after loading the view.
     }
 

@@ -35,8 +35,6 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
 
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
         refresh()
     }
 
@@ -44,7 +42,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -115,11 +113,9 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
             let destination = segue.destination as! CommitteeInfoViewController
             destination.committee = rooms[selectedRoom]
             var committeeScheduleText = ""
-            for x in 0..<numSessions - 1 {
-                committeeScheduleText.append(sessionNames[x] + ": " + rooms[selectedRoom].rooms[x] + "\n")
+            for x in 0..<numSessions {
+                committeeScheduleText.append(sessionNames[x] + ":\n\t" + rooms[selectedRoom].rooms[x] + "\n\n")
             }
-            committeeScheduleText.append(sessionNames[numSessions - 1] + ": " + rooms[selectedRoom].rooms[numSessions - 1])
-            print(committeeScheduleText)
             destination.scheduleText = committeeScheduleText
         }
     }
@@ -128,7 +124,6 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
         dismiss(animated: true, completion: nil)
     }
     
-    
     func refresh() {
         scrapeRooms { scrapedTuple in
             self.rooms = scrapedTuple.0
@@ -136,7 +131,6 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
             self.sessionNames = scrapedTuple.2
             self.numSessions = scrapedTuple.3
             DispatchQueue.main.async {
-                self.navigationItem.title = self.sessionNames[self.sessionNumber]
                 self.collectionView?.reloadData()
             }
         }
@@ -162,7 +156,6 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
                     do {
                         let roomsJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                         sessionNumber = roomsJSON!["session"] as! Int
-                        print(sessionNumber)
                         if sessionNumber == 0 {
                             self.showUnavailableRoomsAlert()
                         } else {
