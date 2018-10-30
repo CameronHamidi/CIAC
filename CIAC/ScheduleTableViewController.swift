@@ -152,18 +152,15 @@ class ScheduleTableViewController: UITableViewController {
         if schedule.count != 0 {
             let event = schedule[displayDay].events[indexPath.row]
             if event.identifier == "time" && event.event.count > 51 {
-                print("75")
-                return 85
+                return 75
             } else if event.identifier == "time" && event.event.count > 31 {
                 let additionalChars = event.event.count - 31
                 var quotient: Float = Float(additionalChars) / 20.0
                 quotient = quotient.rounded(.up)
-                print(event.event)
-                print(CGFloat(quotient * 14 + 40))
-                return CGFloat(quotient * 14 + 50)
+                return CGFloat(quotient * 14 + 40)
             }
         }
-        return 44
+        return 34
     }
     
     func scrapeSchedule(completion: @escaping ([DayItem]) -> Void) {
