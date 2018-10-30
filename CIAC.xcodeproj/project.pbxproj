@@ -25,6 +25,9 @@
 		E6CA0D5E215DABD7006C271C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */; };
 		E6DD2DC72186E14F009F7638 /* StaffRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DD2DC62186E14F009F7638 /* StaffRoomDetailViewController.swift */; };
 		E6DD98D6218512C1005FF8EA /* StaffRoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DD98D5218512C1005FF8EA /* StaffRoomsTableViewController.swift */; };
+		E6DDC7402186F8F500F36CBB /* BusTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DDC73F2186F8F500F36CBB /* BusTableViewController.swift */; };
+		E6DDC7422186F94900F36CBB /* BusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DDC7412186F94900F36CBB /* BusItem.swift */; };
+		E6DDC7442187603800F36CBB /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DDC7432187603800F36CBB /* AddressViewController.swift */; };
 		E6F57B1F2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */; };
 		E6F57B212161D1C7006F00C0 /* MeetingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F57B202161D1C7006F00C0 /* MeetingItem.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +53,9 @@
 		E6CA0D5C215DABD7006C271C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6DD2DC62186E14F009F7638 /* StaffRoomDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffRoomDetailViewController.swift; sourceTree = "<group>"; };
 		E6DD98D5218512C1005FF8EA /* StaffRoomsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffRoomsTableViewController.swift; sourceTree = "<group>"; };
+		E6DDC73F2186F8F500F36CBB /* BusTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusTableViewController.swift; sourceTree = "<group>"; };
+		E6DDC7412186F94900F36CBB /* BusItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusItem.swift; sourceTree = "<group>"; };
+		E6DDC7432187603800F36CBB /* AddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
 		E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadDelMeetingsTableViewController.swift; sourceTree = "<group>"; };
 		E6F57B202161D1C7006F00C0 /* MeetingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingItem.swift; sourceTree = "<group>"; };
 		F458C5B17EB3E969426F9B3E /* Pods-CIAC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIAC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIAC/Pods-CIAC.debug.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +114,9 @@
 			children = (
 				E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */,
 				E6CA0D59215DABD7006C271C /* Main.storyboard */,
+				E6DDC7432187603800F36CBB /* AddressViewController.swift */,
+				E6DDC73F2186F8F500F36CBB /* BusTableViewController.swift */,
+				E6DDC7412186F94900F36CBB /* BusItem.swift */,
 				E6DD2DC62186E14F009F7638 /* StaffRoomDetailViewController.swift */,
 				E6DD98D5218512C1005FF8EA /* StaffRoomsTableViewController.swift */,
 				E609C05C2174487900F137A1 /* CommitteeInfoViewController.swift */,
@@ -246,13 +255,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6CA0D58215DAAFB006C271C /* PasswordEnterViewController.swift in Sources */,
+				E6DDC7402186F8F500F36CBB /* BusTableViewController.swift in Sources */,
 				E6CA0D4E215DA869006C271C /* SecretariatInfoViewController.swift in Sources */,
 				E6F57B1F2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift in Sources */,
 				E6ADAE1421712BE300E7B096 /* RoomsCollectionViewController.swift in Sources */,
 				E6CA0D4C215DA869006C271C /* DEPRECATEDRoomTableViewController.swift in Sources */,
 				E6F57B212161D1C7006F00C0 /* MeetingItem.swift in Sources */,
+				E6DDC7422186F94900F36CBB /* BusItem.swift in Sources */,
 				E609C05D2174487900F137A1 /* CommitteeInfoViewController.swift in Sources */,
 				E6DD98D6218512C1005FF8EA /* StaffRoomsTableViewController.swift in Sources */,
+				E6DDC7442187603800F36CBB /* AddressViewController.swift in Sources */,
 				E6761FDA2166D0C5003CD4F8 /* RoomItem.swift in Sources */,
 				E6DD2DC72186E14F009F7638 /* StaffRoomDetailViewController.swift in Sources */,
 				E6CA0D57215DAAFB006C271C /* HeadDelTableViewController.swift in Sources */,
@@ -418,7 +430,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "45399245-8fcb-4661-bfea-ed9b0c250865";
-				PROVISIONING_PROFILE_SPECIFIER = CIACDevelopmentProfile;
+				PROVISIONING_PROFILE_SPECIFIER = "CIAC Development Profile";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -443,7 +455,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e475f322-07eb-4df8-866e-64cc8f91866c";
-				PROVISIONING_PROFILE_SPECIFIER = CIACDistributionProfile;
+				PROVISIONING_PROFILE_SPECIFIER = "CIAC Distribution Profile";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

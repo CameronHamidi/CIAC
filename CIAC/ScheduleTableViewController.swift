@@ -153,7 +153,7 @@ class ScheduleTableViewController: UITableViewController {
             let event = schedule[displayDay].events[indexPath.row]
             if event.identifier == "time" && event.event.count > 51 {
                 print("75")
-                return 75
+                return 85
             } else if event.identifier == "time" && event.event.count > 31 {
                 let additionalChars = event.event.count - 31
                 var quotient: Float = Float(additionalChars) / 20.0
