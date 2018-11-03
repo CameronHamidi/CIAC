@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class HeadDelMeetingsTableViewController: UITableViewController {
 
@@ -21,12 +22,21 @@ class HeadDelMeetingsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.meetings = []
         super.init(coder: aDecoder)
-        getMeetingData()
+//        getMeetingData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,46 +87,46 @@ class HeadDelMeetingsTableViewController: UITableViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func getMeetingData() {
-        scrapeMeetings { scrapedMeetings in
-            self.meetings = scrapedMeetings
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    func scrapeMeetings(completion: @escaping ([MeetingItem]) -> Void) {
-        let config = URLSessionConfiguration.default
-        //config.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        var scrapedMeetings = [MeetingItem]()
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                print("Getting information from website")
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    do {
-                        let headDelJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                        let meetingsArray = try headDelJSON!["meetings"] as? [[String: String]]
-                        for meeting in meetingsArray! {
-                            let newDate = meeting["date"]!
-                            let newDescription = meeting["description"]!
-                            let newMeeting = MeetingItem(date: newDate, description: newDescription)
-                            scrapedMeetings.append(newMeeting)
-                        }
-                    }
-                    catch { print(error)}
-                }
-            }
-            completion(scrapedMeetings)
-        }
-        task.resume()
-    }
+//    func getMeetingData() {
+//        scrapeMeetings { scrapedMeetings in
+//            self.meetings = scrapedMeetings
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+//    }
+//    
+//    func scrapeMeetings(completion: @escaping ([MeetingItem]) -> Void) {
+//        let config = URLSessionConfiguration.default
+//        //config.waitsForConnectivity = true
+//        let defaultSession = URLSession(configuration: config)
+//        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+//        let request = NSMutableURLRequest(url: url!)
+//        request.cachePolicy = .reloadIgnoringLocalCacheData
+//        var scrapedMeetings = [MeetingItem]()
+//        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+//            do {
+//                print("Getting information from website")
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+//                    do {
+//                        let headDelJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+//                        let meetingsArray = try headDelJSON!["meetings"] as? [[String: String]]
+//                        for meeting in meetingsArray! {
+//                            let newDate = meeting["date"]!
+//                            let newDescription = meeting["description"]!
+//                            let newMeeting = MeetingItem(date: newDate, description: newDescription)
+//                            scrapedMeetings.append(newMeeting)
+//                        }
+//                    }
+//                    catch { print(error)}
+//                }
+//            }
+//            completion(scrapedMeetings)
+//        }
+//        task.resume()
+//    }
     
 
 }

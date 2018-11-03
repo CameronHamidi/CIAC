@@ -28,6 +28,13 @@ class ScheduleTableViewController: UITableViewController {
         //schedule = scrapeSchedule()
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)//action: #selector(addTapped))
         navigationController!.toolbarItems = [add]
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        leftSwipe.direction = .left
+        view.addGestureRecognizer(leftSwipe)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -36,6 +43,20 @@ class ScheduleTableViewController: UITableViewController {
         self.numDays = 0
         super.init(coder: aDecoder)
         refresh(self)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            if prevDayButton.isEnabled {
+                prevDay(self)
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
+        } else if sender.direction == .left {
+            if nextDayButton.isEnabled {
+                nextDay(self)
+            }
+        }
     }
     
     func reloadData() {

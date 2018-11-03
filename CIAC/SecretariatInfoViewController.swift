@@ -15,11 +15,9 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
     
     @IBOutlet weak var sgName: UILabel!
     @IBOutlet weak var sgEmail: UIButton!
-    @IBOutlet weak var sgPhone: UIButton!
     
     @IBOutlet weak var dgName: UILabel!
     @IBOutlet weak var dgEmail: UIButton!
-    @IBOutlet weak var dgPhone: UIButton!
     
     
     var secretariatInfoJSON: JSON?
@@ -57,9 +55,25 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureLabels()
+//        configureLabels()
 
         // Do any additional setup after loading the view.
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+        
+        self.sgName.text = self.secretariatInfoJSON!["sgInfo"]["name"].string
+        self.sgEmail.setTitle(self.secretariatInfoJSON!["sgInfo"]["email"].string, for: .normal)
+        print(self.secretariatInfoJSON!["sgInfo"]["phone"].string)
+        
+        self.dgName.text = self.secretariatInfoJSON!["dgInfo"]["name"].string
+        self.dgEmail.setTitle(self.secretariatInfoJSON!["dgInfo"]["email"].string, for: .normal)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            navigationController?.popViewController(animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,47 +81,38 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
         // Dispose of any resources that can be recreated.
     }
     
-    func configureLabels() {
-        print("configure")
-        scrapeInfo { secretariatInfoJSON in
-            self.secretariatInfoJSON = secretariatInfoJSON
-            DispatchQueue.main.async {
-                self.sgName.text = self.secretariatInfoJSON!["sgInfo"]["name"].string
-                self.sgEmail.setTitle(self.secretariatInfoJSON!["sgInfo"]["email"].string, for: .normal)
-                self.sgPhone.setTitle(self.secretariatInfoJSON!["sgInfo"]["phone"].string, for: .normal)
-
-                self.dgName.text = self.secretariatInfoJSON!["dgInfo"]["name"].string
-                self.dgEmail.setTitle(self.secretariatInfoJSON!["dgInfo"]["email"].string, for: .normal)
-                self.dgPhone.setTitle(self.secretariatInfoJSON!["dgInfo"]["phone"].string, for: .normal)
-                
-            }
-        }
-    }
-
-    func scrapeInfo(completion: @escaping (JSON) -> Void) {
-        let config = URLSessionConfiguration.default
-        //config.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        var secretariatInfoJSON = JSON()
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                print("Getting information from website")
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    do {
-                        let dataJSON = try JSON(data: data)
-                        secretariatInfoJSON = dataJSON["secretariatInfo"]
-                    }
-                    catch { print(error)}
-                }
-            }
-            completion(secretariatInfoJSON)
-        }
-        task.resume()
-    }
+//    func configureLabels() {
+//        print("configure")
+//        scrapeInfo { secretariatInfoTuple in
+//            self.secretariatInfoJSON = secretariatInfoTuple.0
+//            self.meetings = secretariatInfoTuple.1
+//        }
+//    }
+//
+//    func scrapeInfo(completion: @escaping ((JSON, [MeetingItem])) -> Void) {
+//        let config = URLSessionConfiguration.default
+//        //config.waitsForConnectivity = true
+//        let defaultSession = URLSession(configuration: config)
+//        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+//        let request = NSMutableURLRequest(url: url!)
+//        request.cachePolicy = .reloadIgnoringLocalCacheData
+//        var secretariatInfoJSON = JSON()
+//        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+//            do {
+//                print("Getting information from website")
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+//                    do {
+//                        let dataJSON = try JSON(data: data)
+//                        secretariatInfoJSON = dataJSON["secretariatInfo"]
+//                    }
+//                    catch { print(error)}
+//                }
+//            }
+//            completion(secretariatInfoJSON)
+//        }
+//        task.resume()
+//    }
 
 }

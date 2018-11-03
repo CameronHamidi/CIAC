@@ -24,6 +24,15 @@ class StaffRoomDetailViewController: UIViewController {
         scheduleTextView.text = scheduleText
 
         // Do any additional setup after loading the view.
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func close(_ sender: Any) {

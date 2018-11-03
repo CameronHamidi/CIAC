@@ -24,6 +24,15 @@ class CommitteeInfoViewController: UIViewController {
         committeeImage.image = UIImage(named: committee!.image)
         committeeLabel.text = committee!.committee
         // Do any additional setup after loading the view.
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            navigationController?.popViewController(animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {

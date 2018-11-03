@@ -26,12 +26,21 @@ class StaffRoomsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     // MARK: - Table view data source
@@ -52,7 +61,7 @@ class StaffRoomsTableViewController: UITableViewController {
         let nameLabel = cell?.viewWithTag(1000) as! UILabel
         nameLabel.text = room.committee
         let roomLabel = cell?.viewWithTag(1001) as! UILabel
-        roomLabel.text = room.rooms[0]
+        roomLabel.text = room.rooms[currSession]
         
         return cell!
     }

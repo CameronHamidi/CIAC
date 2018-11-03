@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class HeadDelTableViewController: UITableViewController {
 
     var correctPassword: String?
+    var secretariatInfoJSON: JSON?
+    var meetings: [MeetingItem]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +23,16 @@ class HeadDelTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+        refresh()
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +74,61 @@ class HeadDelTableViewController: UITableViewController {
         } else if indexPath.row == 1 {
             performSegue(withIdentifier: "showHeadDelMeetings", sender: self)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSecretariatInfo" {
+            let destination = segue.destination as! SecretariatInfoViewController
+            destination.secretariatInfoJSON = self.secretariatInfoJSON
+        } else if segue.identifier == "showHeadDelMeetings" {
+            let destination = segue.destination as! HeadDelMeetingsTableViewController
+            destination.meetings = meetings
+        }
+    }
+    
+    func refresh() {
+        print("configure")
+        scrapeInfo { secretariatInfoTuple in
+            self.secretariatInfoJSON = secretariatInfoTuple.0
+            self.meetings = secretariatInfoTuple.1
+            DispatchQueue.main.async {                
+            }
+        }
+    }
+    
+    func scrapeInfo(completion: @escaping ((JSON, [MeetingItem])) -> Void) {
+        let config = URLSessionConfiguration.default
+        //config.waitsForConnectivity = true
+        let defaultSession = URLSession(configuration: config)
+        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+        let request = NSMutableURLRequest(url: url!)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        var secretariatInfoJSON = JSON()
+        var scrapedMeetings = [MeetingItem]()
+        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+            do {
+                print("Getting information from website")
+                if let error = error {
+                    print(error.localizedDescription)
+                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                    do {
+                        let dataJSON = try JSON(data: data)
+                        let secretariatData = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        secretariatInfoJSON = dataJSON["secretariatInfo"]
+                        let meetingsArray = try secretariatData!["meetings"] as? [[String: String]]
+                        for meeting in meetingsArray! {
+                            let newDate = meeting["date"]!
+                            let newDescription = meeting["description"]!
+                            let newMeeting = MeetingItem(date: newDate, description: newDescription)
+                            scrapedMeetings.append(newMeeting)
+                        }
+                    }
+                    catch { print(error)}
+                }
+            }
+            completion((secretariatInfoJSON, scrapedMeetings))
+        }
+        task.resume()
     }
 
 }

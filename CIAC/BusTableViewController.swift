@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BusTableViewController: UITableViewController {
+class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
     var busDays: [BusDayItem]
     var numDays: Int
@@ -16,6 +16,7 @@ class BusTableViewController: UITableViewController {
     var addresses: [[String: String]]
     @IBOutlet weak var prevDayButton: UIBarButtonItem!
     @IBOutlet weak var nextDayButton: UIBarButtonItem!
+    var panGesture: UIPanGestureRecognizer!
     
     required init?(coder aDecoder: NSCoder) {
         busDays = [BusDayItem]()
@@ -27,7 +28,62 @@ class BusTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        //view.addGestureRecognizer(panGesture)
         refresh(self)
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        leftSwipe.direction = .left
+        view.addGestureRecognizer(leftSwipe)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            if prevDayButton.isEnabled {
+                prevDay(self)
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
+        } else if sender.direction == .left {
+            if nextDayButton.isEnabled {
+                nextDay(self)
+            }
+        }
+    }
+    
+    @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer){
+        
+        
+        let interactiveTransition = UIPercentDrivenInteractiveTransition()
+        
+        let percent = max(gesture.translation(in: view).x, 0) / view.frame.width
+        
+        switch gesture.state {
+            
+        case .began:
+            dismiss(animated: true, completion: nil)
+            
+        case .changed:
+            interactiveTransition.update(percent)
+            
+        case .ended:
+            let velocity = gesture.velocity(in: view).x
+            
+            // Continue if drag more than 50% of screen width or velocity is higher than 1000
+            if percent > 0.5 || velocity > 1000 {
+                interactiveTransition.finish()
+            } else {
+                interactiveTransition.cancel()
+            }
+            
+        case .cancelled, .failed:
+            interactiveTransition.cancel()
+            
+        default:break
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
