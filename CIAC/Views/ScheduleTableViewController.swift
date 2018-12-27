@@ -8,6 +8,8 @@
 
 import UIKit
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 class ScheduleTableViewController: UITableViewController {
 
@@ -159,7 +161,7 @@ class ScheduleTableViewController: UITableViewController {
     
     @IBAction func refresh(_ sender: Any) {
         scrapeSchedule { schedule in
-            self.schedule = schedule
+            self.schedule = schedule!
             DispatchQueue.main.async {
                 self.reloadData()
                 self.numDays = self.schedule.count
@@ -184,7 +186,7 @@ class ScheduleTableViewController: UITableViewController {
         return 34
     }
     
-    func scrapeSchedule(completion: @escaping ([DayItem]) -> Void) {
+    func scrapeSchedule(completion: @escaping ([DayItem]?) -> Void) {
         let config = URLSessionConfiguration.default
         //config.waitsForConnectivity = true
         let defaultSession = URLSession(configuration: config)
@@ -192,22 +194,24 @@ class ScheduleTableViewController: UITableViewController {
         let request = NSMutableURLRequest(url: url!)
         request.cachePolicy = .reloadIgnoringLocalCacheData
         var schedule = [DayItem]()
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    let scheduleArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
-                    for i in 0..<scheduleArray!.count {
-                        schedule.append(self.organizeScheduleJSON(scheduleJSON: scheduleArray![i], dayIndex: i))
+        Alamofire.request("https://www.ciaconline.org/assets/schedule.json", method: .get).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                do {
+                    if let json = try JSON(data: data) {
+                        for i in 0..<json.count {
+                            schedule.append(organizeScheduleJSON(scheduleJSON: json, dayIndex: i))
+                        }
+                        completion(schedule)
                     }
-                    completion(schedule)
+                } catch {
+                    completion(nil)
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
             }
-            catch { print("Scrape schedule error")}
         }
-        task.resume()
-        //return schedule
     }
 
     func organizeScheduleJSON(scheduleJSON: [String: Any], dayIndex: Int) -> DayItem {

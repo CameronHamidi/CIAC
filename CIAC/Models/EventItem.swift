@@ -8,7 +8,13 @@
 
 import Foundation
 
-class EventItem {
+enum EventIdentifier {
+    case event
+    case time
+    case location
+}
+
+class EventItem: Codable {
     var event: String
     var identifier: String
     var information: String?
@@ -25,20 +31,13 @@ class EventItem {
     }
 }
 
-class DayItem {
+class DayItem: Codable {
     var day: String
     var events: [EventItem]
-    var information: String?
     
     init(day: String, events: [EventItem]) {
         self.day = day
         self.events = events
-    }
-    
-    init(day: String, events: [EventItem], information: String?) {
-        self.day = day
-        self.events = events
-        self.information = information
     }
     
     init() {

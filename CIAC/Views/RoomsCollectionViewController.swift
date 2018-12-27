@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 private let reuseIdentifier = "Cell"
 
@@ -134,56 +136,79 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     func refresh() {
-        scrapeRooms { scrapedTuple in
-            self.rooms = scrapedTuple.0
-            self.sessionNumber = scrapedTuple.1
-            self.sessionNames = scrapedTuple.2
-            self.numSessions = scrapedTuple.3
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
+        scrapeRooms { roomResponse in
+            if roomResponse != nil {
+                self.rooms = roomResponse!.rooms
+                self.sessionNumber = roomResponse!.session
+                self.sessionNames = roomResponse!.sessions
+                self.numSessions = roomResponse!.numSessions
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.showUnavailableRoomsAlert()
+                }
             }
         }
     }
     
-    func scrapeRooms(completion: @escaping (([RoomItem], Int, [String], Int)) -> Void) {
-        let config = URLSessionConfiguration.default
-        //config.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/rooms.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        var readRooms = [RoomItem]()
-        var sessionNumber = 0
-        var sessionNames = [String]()
-        var numSessions = 0
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                print("Getting information from website")
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    do {
-                        let roomsJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                        sessionNumber = roomsJSON!["session"] as! Int
-                        if sessionNumber == 0 {
-                            self.showUnavailableRoomsAlert()
-                        } else {
-                            sessionNames = roomsJSON!["sessions"] as! [String]
-                            numSessions = roomsJSON!["numSessions"] as! Int
-                            let currSessionJSON = roomsJSON!["rooms"] as! [[String: Any]]
-                            for room in currSessionJSON {
-                                let newRoomItem = RoomItem(committee: room["committee"]! as! String, image: room["image"]! as! String, rooms: room["rooms"]! as! [String])
-                                readRooms.append(newRoomItem)
-                            }
-                        }
-                    }
-                    catch { print(error)}
+    func scrapeRooms(completion: @escaping (RoomResponse?) -> Void) {
+        Alamofire.request("https://www.ciaconline.org/assets/rooms.json", method: .get).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                if let roomResponse = try? decoder.decode(RoomResponse.self, from: data) {
+                    completion(roomResponse)
+                } else {
+                    completion(nil)
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
             }
-            completion((rooms: readRooms, sessionNumber: sessionNumber - 1, sessionNames, numSessions))
         }
-        task.resume()
     }
+    
+//    func scrapeRooms(completion: @escaping (([RoomItem], Int, [String], Int)) -> Void) {
+//        let config = URLSessionConfiguration.default
+//        //config.waitsForConnectivity = true
+//        let defaultSession = URLSession(configuration: config)
+//        let url = URL(string: "https://www.ciaconline.org/assets/rooms.json")
+//        let request = NSMutableURLRequest(url: url!)
+//        request.cachePolicy = .reloadIgnoringLocalCacheData
+//        var readRooms = [RoomItem]()
+//        var sessionNumber = 0
+//        var sessionNames = [String]()
+//        var numSessions = 0
+//        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+//            do {
+//                print("Getting information from website")
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+//                    do {
+//                        let roomsJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+//                        sessionNumber = roomsJSON!["session"] as! Int
+//                        if sessionNumber == 0 {
+//                            self.showUnavailableRoomsAlert()
+//                        } else {
+//                            sessionNames = roomsJSON!["sessions"] as! [String]
+//                            numSessions = roomsJSON!["numSessions"] as! Int
+//                            let currSessionJSON = roomsJSON!["rooms"] as! [[String: Any]]
+//                            for room in currSessionJSON {
+//                                let newRoomItem = RoomItem(committee: room["committee"]! as! String, image: room["image"]! as! String, rooms: room["rooms"]! as! [String])
+//                                readRooms.append(newRoomItem)
+//                            }
+//                        }
+//                    }
+//                    catch { print(error)}
+//                }
+//            }
+//            completion((rooms: readRooms, sessionNumber: sessionNumber - 1, sessionNames, numSessions))
+//        }
+//        task.resume()
+//    }
 
     func showUnavailableRoomsAlert() {
         let message = "No room assignments available. Check back later."

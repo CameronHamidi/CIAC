@@ -91,6 +91,45 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		E606B06621D457F4004CED8B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E6DDC7432187603800F36CBB /* AddressViewController.swift */,
+				E6DDC73F2186F8F500F36CBB /* BusTableViewController.swift */,
+				E609C05C2174487900F137A1 /* CommitteeInfoViewController.swift */,
+				E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */,
+				E6CA0D55215DAAFB006C271C /* HeadDelTableViewController.swift */,
+				E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */,
+				E6CA0D56215DAAFB006C271C /* PasswordEnterViewController.swift */,
+				E6ADAE1321712BE300E7B096 /* RoomsCollectionViewController.swift */,
+				E6CA0D40215DA868006C271C /* ScheduleTableViewController.swift */,
+				E6CA0D41215DA869006C271C /* SecretariatInfoViewController.swift */,
+				E6DD2DC62186E14F009F7638 /* StaffRoomDetailViewController.swift */,
+				E6DD98D5218512C1005FF8EA /* StaffRoomsTableViewController.swift */,
+				E6CA0D3B215DA868006C271C /* ViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E606B06721D45849004CED8B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E6DDC7412186F94900F36CBB /* BusItem.swift */,
+				E6CA0D39215DA868006C271C /* EventItem.swift */,
+				E6F57B202161D1C7006F00C0 /* MeetingItem.swift */,
+				E6761FD92166D0C5003CD4F8 /* RoomItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E606B06821D45883004CED8B /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				E6CA0D3F215DA868006C271C /* DEPRECATEDRoomTableViewController.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
 		E6CA0CF0215DA70B006C271C = {
 			isa = PBXGroup;
 			children = (
@@ -112,29 +151,14 @@
 		E6CA0CFB215DA70B006C271C /* CIAC */ = {
 			isa = PBXGroup;
 			children = (
+				E6CA0D42215DA869006C271C /* AppDelegate.swift */,
+				E6CA0D3D215DA868006C271C /* Assets.xcassets */,
+				E606B06821D45883004CED8B /* Deprecated */,
+				E6CA0D43215DA869006C271C /* Info.plist */,
 				E6CA0D5B215DABD7006C271C /* LaunchScreen.storyboard */,
 				E6CA0D59215DABD7006C271C /* Main.storyboard */,
-				E6DDC7432187603800F36CBB /* AddressViewController.swift */,
-				E6DDC73F2186F8F500F36CBB /* BusTableViewController.swift */,
-				E6DDC7412186F94900F36CBB /* BusItem.swift */,
-				E6DD2DC62186E14F009F7638 /* StaffRoomDetailViewController.swift */,
-				E6DD98D5218512C1005FF8EA /* StaffRoomsTableViewController.swift */,
-				E609C05C2174487900F137A1 /* CommitteeInfoViewController.swift */,
-				E6ADAE1321712BE300E7B096 /* RoomsCollectionViewController.swift */,
-				E6CA0D42215DA869006C271C /* AppDelegate.swift */,
-				E6CA0D3B215DA868006C271C /* ViewController.swift */,
-				E6CA0D3F215DA868006C271C /* DEPRECATEDRoomTableViewController.swift */,
-				E6761FD92166D0C5003CD4F8 /* RoomItem.swift */,
-				E6CA0D40215DA868006C271C /* ScheduleTableViewController.swift */,
-				E6CA0D39215DA868006C271C /* EventItem.swift */,
-				E6CA0D56215DAAFB006C271C /* PasswordEnterViewController.swift */,
-				E6CA0D55215DAAFB006C271C /* HeadDelTableViewController.swift */,
-				E6CA0D41215DA869006C271C /* SecretariatInfoViewController.swift */,
-				E6F57B1E2161C610006F00C0 /* HeadDelMeetingsTableViewController.swift */,
-				E6F57B202161D1C7006F00C0 /* MeetingItem.swift */,
-				E67CAB242162C7BD00D2F13B /* MeetingDetailViewController.swift */,
-				E6CA0D3D215DA868006C271C /* Assets.xcassets */,
-				E6CA0D43215DA869006C271C /* Info.plist */,
+				E606B06721D45849004CED8B /* Models */,
+				E606B06621D457F4004CED8B /* Views */,
 			);
 			path = CIAC;
 			sourceTree = "<group>";

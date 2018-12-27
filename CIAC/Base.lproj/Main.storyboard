@@ -833,11 +833,21 @@
                                             <nil key="highlightedColor"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" tag="1001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time_white" translatesAutoresizingMaskIntoConstraints="NO" id="pnb-T3-pzI">
+                                            <rect key="frame" x="25" y="9" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="pVq-Un-uzj"/>
+                                                <constraint firstAttribute="width" constant="25" id="wyw-Xp-xoI"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="pJH-vm-Ydd" firstAttribute="trailing" secondItem="txM-Uc-srx" secondAttribute="trailingMargin" id="Fuu-A6-a5R"/>
                                         <constraint firstAttribute="bottom" secondItem="pJH-vm-Ydd" secondAttribute="bottom" id="Ien-cm-cFi"/>
+                                        <constraint firstItem="pJH-vm-Ydd" firstAttribute="leading" secondItem="pnb-T3-pzI" secondAttribute="trailing" constant="5" id="LDj-ln-4cB"/>
+                                        <constraint firstItem="pnb-T3-pzI" firstAttribute="top" secondItem="txM-Uc-srx" secondAttribute="top" constant="9" id="R92-1h-dH6"/>
                                         <constraint firstItem="pJH-vm-Ydd" firstAttribute="top" secondItem="txM-Uc-srx" secondAttribute="top" id="UI9-2M-cwk"/>
+                                        <constraint firstItem="pnb-T3-pzI" firstAttribute="leading" secondItem="txM-Uc-srx" secondAttribute="leading" constant="25" id="ZCS-qa-kiR"/>
                                         <constraint firstItem="pJH-vm-Ydd" firstAttribute="leading" secondItem="txM-Uc-srx" secondAttribute="leadingMargin" constant="39" id="cxG-wl-rQ8"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -1344,6 +1354,7 @@
         <image name="bus icon" width="512" height="512"/>
         <image name="staff icon" width="512" height="512"/>
         <image name="static1.squarespace.com" width="1500" height="582"/>
+        <image name="time_white" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="n89-uK-Pho"/>

@@ -8,7 +8,14 @@
 
 import Foundation
 
-class RoomItem {
+class RoomResponse: Codable {
+    var session: Int
+    var numSessions: Int
+    var rooms: [RoomItem]
+    var sessions: [String]
+}
+
+class RoomItem: Codable {
     var committee: String
     var image: String
     var rooms: [String]
