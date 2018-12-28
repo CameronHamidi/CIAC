@@ -126,17 +126,16 @@ class ScheduleTableViewController: UITableViewController {
         let eventItem = dayItem.events[indexPath.row]
         let identifier = eventItem.identifier
         let eventOrTimeText = eventItem.event
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         let label = cell.viewWithTag(1000) as! UILabel
         label.text = eventOrTimeText
         if identifier == "event" || identifier == "eventDDI" {
             label.adjustsFontSizeToFitWidth = true
-        } else if identifier == "time" {
+        } else if identifier == "time" || identifier == "location" {
            label.sizeToFit()
         }
-        
-        return cell
+        return UITableViewCell()
         
     }
     
@@ -166,6 +165,9 @@ class ScheduleTableViewController: UITableViewController {
                 self.reloadData()
                 self.numDays = self.schedule.count
                 self.configureDayButtons()
+                for i in self.schedule[0].events {
+                    print(i.event)
+                }
             }
         }
     }
@@ -187,23 +189,17 @@ class ScheduleTableViewController: UITableViewController {
     }
     
     func scrapeSchedule(completion: @escaping ([DayItem]?) -> Void) {
-        let config = URLSessionConfiguration.default
-        //config.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/schedule.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
         var schedule = [DayItem]()
+        URLCache.shared.removeAllCachedResponses()
         Alamofire.request("https://www.ciaconline.org/assets/schedule.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 do {
-                    if let json = try JSON(data: data) {
-                        for i in 0..<json.count {
-                            schedule.append(organizeScheduleJSON(scheduleJSON: json, dayIndex: i))
-                        }
-                        completion(schedule)
+                    let json = try JSON(data: data)
+                    for (index,day):(String, JSON) in json {
+                        schedule.append(self.organizeScheduleJSON(dayJSON: day))
                     }
+                    completion(schedule)
                 } catch {
                     completion(nil)
                 }
@@ -214,37 +210,42 @@ class ScheduleTableViewController: UITableViewController {
         }
     }
 
-    func organizeScheduleJSON(scheduleJSON: [String: Any], dayIndex: Int) -> DayItem {
-        let returnDayItem = DayItem()
-        returnDayItem.day = scheduleJSON["day"] as! String
-        let eventTimesArray = scheduleJSON["eventTimes"] as! [[String : Any]]
-        for event in eventTimesArray {
-            let eventName = event["event"] as! String
-            let eventInfo = event["information"] as! String?
-            let eventIdentifier = (eventInfo != nil ? "eventDDI" : "event")
-            returnDayItem.events.append(EventItem(event: eventName, identifier: eventIdentifier, information: eventInfo))
-            let timesArray = event["times"] as! [String]
-            for time in timesArray {
-                let timeEventItem = EventItem(event: time, identifier: "time")
-                returnDayItem.events.append(timeEventItem)
+    func organizeScheduleJSON(dayJSON: JSON) -> DayItem {
+        var events = [EventItem]()
+        print(type(of: dayJSON["information"]))
+        for (index,event):(String, JSON) in dayJSON["eventTimes"] {
+            if event["information"] != nil {
+                events.append(EventItem(event: event["event"].string!, identifier: "eventDDI", information: event["information"].string!))
+            } else {
+                events.append(EventItem(event: event["event"].string!, identifier: "event"))
+            }
+            if event["location"] != nil {
+                events.append(EventItem(event: event["location"].string!, identifier: "location"))
+            }
+            if event["times"] != nil {
+                var timeArray = event["times"].arrayValue.map({$0.stringValue})
+                for time in timeArray {
+                    events.append(EventItem(event: time, identifier: "time"))
+                }
             }
         }
-        return returnDayItem
+        return DayItem(day: dayJSON["day"].string!, events: events)
+        
     }
 }
 
-func neworganizeScheduleJSON(scheduleJSON: [String: Any], dayIndex: Int) -> DayItem {
-    let returnDayItem = DayItem()
-    returnDayItem.day = scheduleJSON["day"] as! String
-    let eventTimesArray = scheduleJSON["eventTimes"] as! [[String : Any]]
-    for event in eventTimesArray {
-        let eventName = event["event"] as! String
-        returnDayItem.events.append(EventItem(event: eventName, identifier: "event"))
-        let timesArray = event["times"] as! [String]
-        for time in timesArray {
-            let timeEventItem = EventItem(event: time, identifier: "time")
-            returnDayItem.events.append(timeEventItem)
-        }
-    }
-    return returnDayItem
-}
+//func neworganizeScheduleJSON(scheduleJSON: [String: Any], dayIndex: Int) -> DayItem {
+//    let returnDayItem = DayItem()
+//    returnDayItem.day = scheduleJSON["day"] as! String
+//    let eventTimesArray = scheduleJSON["eventTimes"] as! [[String : Any]]
+//    for event in eventTimesArray {
+//        let eventName = event["event"] as! String
+//        returnDayItem.events.append(EventItem(event: eventName, identifier: "event"))
+//        let timesArray = event["times"] as! [String]
+//        for time in timesArray {
+//            let timeEventItem = EventItem(event: time, identifier: "time")
+//            returnDayItem.events.append(timeEventItem)
+//        }
+//    }
+//    return returnDayItem
+//}

@@ -14,7 +14,7 @@ enum EventIdentifier {
     case location
 }
 
-class EventItem: Codable {
+class EventItem {
     var event: String
     var identifier: String
     var information: String?
@@ -24,14 +24,14 @@ class EventItem: Codable {
         self.identifier = identifier
     }
     
-    init(event: String, identifier: String, information: String?) {
+    init(event: String, identifier: String, information: String) {
         self.event = event
         self.identifier = identifier
         self.information = information
     }
 }
 
-class DayItem: Codable {
+class DayItem {
     var day: String
     var events: [EventItem]
     

@@ -154,6 +154,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     func scrapeRooms(completion: @escaping (RoomResponse?) -> Void) {
+        URLCache.shared.removeAllCachedResponses()
         Alamofire.request("https://www.ciaconline.org/assets/rooms.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
