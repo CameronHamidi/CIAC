@@ -8,11 +8,12 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 
 class HeadDelTableViewController: UITableViewController {
 
     var correctPassword: String?
-    var secretariatInfoJSON: JSON?
+    var secretariatInfo: [SecretariatInfoResponse]!
     var meetings: [MeetingItem]!
     
     override func viewDidLoad() {
@@ -79,7 +80,7 @@ class HeadDelTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showSecretariatInfo" {
             let destination = segue.destination as! SecretariatInfoViewController
-            destination.secretariatInfoJSON = self.secretariatInfoJSON
+            destination.secretariatInfo = self.secretariatInfo
         } else if segue.identifier == "showHeadDelMeetings" {
             let destination = segue.destination as! HeadDelMeetingsTableViewController
             destination.meetings = meetings
@@ -88,47 +89,68 @@ class HeadDelTableViewController: UITableViewController {
     
     func refresh() {
         print("configure")
-        scrapeInfo { secretariatInfoTuple in
-            self.secretariatInfoJSON = secretariatInfoTuple.0
-            self.meetings = secretariatInfoTuple.1
+        scrapeInfo { headDelData in
+            self.meetings = headDelData!.meetings
+            self.secretariatInfo = headDelData!.secretariatInfo
             DispatchQueue.main.async {                
             }
         }
     }
     
-    func scrapeInfo(completion: @escaping ((JSON, [MeetingItem])) -> Void) {
-        let config = URLSessionConfiguration.default
-        //config.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        var secretariatInfoJSON = JSON()
-        var scrapedMeetings = [MeetingItem]()
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                print("Getting information from website")
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    do {
-                        let dataJSON = try JSON(data: data)
-                        let secretariatData = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                        secretariatInfoJSON = dataJSON["secretariatInfo"]
-                        let meetingsArray = try secretariatData!["meetings"] as? [[String: String]]
-                        for meeting in meetingsArray! {
-                            let newDate = meeting["date"]!
-                            let newDescription = meeting["description"]!
-                            let newMeeting = MeetingItem(date: newDate, description: newDescription)
-                            scrapedMeetings.append(newMeeting)
-                        }
-                    }
-                    catch { print(error)}
+    func scrapeInfo(completion: @escaping (HeadDelDataResponse?) -> Void) {
+        URLCache.shared.removeAllCachedResponses()
+        Alamofire.request("https://www.ciaconline.org/assets/headDelData.json", method: .get).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    print(data)
+                    let headDelData = try decoder.decode(HeadDelDataResponse.self, from: data)
+                    completion(headDelData)
+                } catch {
+                    print("here")
+                    completion(nil)
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
             }
-            completion((secretariatInfoJSON, scrapedMeetings))
         }
-        task.resume()
     }
+    
+//    func scrapeInfo(completion: @escaping ((JSON, [MeetingItem])) -> Void) {
+//        let config = URLSessionConfiguration.default
+//        //config.waitsForConnectivity = true
+//        let defaultSession = URLSession(configuration: config)
+//        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+//        let request = NSMutableURLRequest(url: url!)
+//        request.cachePolicy = .reloadIgnoringLocalCacheData
+//        var secretariatInfoJSON = JSON()
+//        var scrapedMeetings = [MeetingItem]()
+//        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+//            do {
+//                print("Getting information from website")
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+//                    do {
+//                        let dataJSON = try JSON(data: data)
+//                        let secretariatData = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+//                        secretariatInfoJSON = dataJSON["secretariatInfo"]
+//                        let meetingsArray = try secretariatData!["meetings"] as? [[String: String]]
+//                        for meeting in meetingsArray! {
+//                            let newDate = meeting["date"]!
+//                            let newDescription = meeting["description"]!
+//                            let newMeeting = MeetingItem(date: newDate, description: newDescription)
+//                            scrapedMeetings.append(newMeeting)
+//                        }
+//                    }
+//                    catch { print(error)}
+//                }
+//            }
+//            completion((secretariatInfoJSON, scrapedMeetings))
+//        }
+//        task.resume()
+//    }
 
 }

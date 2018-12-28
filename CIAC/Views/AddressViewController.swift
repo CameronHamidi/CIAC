@@ -12,13 +12,13 @@ class AddressViewController: UIViewController {
 
     
     @IBOutlet weak var addressTextView: UITextView!
-    var addressArray: [[String: String]]
+    var addresses: [AddressItem]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         var addressText = ""
-        for address in addressArray {
-            addressText += address["name"]! + ":\n" + address["address"]! + "\n\n"
+        for address in addresses {
+            addressText += address.name + ":\n" + address.address + "\n\n"
         }
         addressTextView.text = addressText
         // Do any additional setup after loading the view.
@@ -34,7 +34,6 @@ class AddressViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        addressArray = []
         super.init(coder: aDecoder)
     }
     

@@ -8,12 +8,12 @@
 
 import Foundation
 
-class MeetingItem {
-    var date: String
-    var description: String
-    
-    init(date: String, description: String) {
-        self.date = date
-        self.description = description
-    }
-}
+//class MeetingItem {
+//    var date: String
+//    var description: String
+//    
+//    init(date: String, description: String) {
+//        self.date = date
+//        self.description = description
+//    }
+//}

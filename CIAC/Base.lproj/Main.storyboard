@@ -1013,8 +1013,10 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dgEmail" destination="zXN-Bl-lyC" id="slm-fH-vyB"/>
+                        <outlet property="dgLabel" destination="KGw-SX-oXd" id="3g3-ne-McJ"/>
                         <outlet property="dgName" destination="wi0-aQ-Onu" id="gKI-uj-dP5"/>
                         <outlet property="sgEmail" destination="flc-qn-j9j" id="q5B-S9-bnK"/>
+                        <outlet property="sgLabel" destination="pYT-oo-swv" id="ZCU-7t-rz4"/>
                         <outlet property="sgName" destination="WA7-XI-End" id="xx8-Qg-gyz"/>
                     </connections>
                 </viewController>

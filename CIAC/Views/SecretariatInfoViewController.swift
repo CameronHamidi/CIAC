@@ -13,14 +13,17 @@ import MessageUI
 class SecretariatInfoViewController: UIViewController, MFMailComposeViewControllerDelegate {
 
     
+    @IBOutlet weak var sgLabel: UILabel!
     @IBOutlet weak var sgName: UILabel!
     @IBOutlet weak var sgEmail: UIButton!
     
+    
+    @IBOutlet weak var dgLabel: UILabel!
     @IBOutlet weak var dgName: UILabel!
     @IBOutlet weak var dgEmail: UIButton!
     
     
-    var secretariatInfoJSON: JSON?
+    var secretariatInfo: [SecretariatInfoResponse]!
     
     @IBAction func close(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -62,12 +65,13 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
         
-        self.sgName.text = self.secretariatInfoJSON!["sgInfo"]["name"].string
-        self.sgEmail.setTitle(self.secretariatInfoJSON!["sgInfo"]["email"].string, for: .normal)
-        print(self.secretariatInfoJSON!["sgInfo"]["phone"].string)
+        sgLabel.text = secretariatInfo[0].role
+        sgName.text = secretariatInfo[0].name
+        sgEmail.setTitle(secretariatInfo[0].email, for: .normal)
         
-        self.dgName.text = self.secretariatInfoJSON!["dgInfo"]["name"].string
-        self.dgEmail.setTitle(self.secretariatInfoJSON!["dgInfo"]["email"].string, for: .normal)
+        dgLabel.text = secretariatInfo[1].role
+        dgName.text = secretariatInfo[1].name
+        dgEmail.setTitle(secretariatInfo[1].email, for: .normal)
     }
     
     @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {

@@ -7,22 +7,18 @@
 //
 
 import UIKit
+import Alamofire
 
 class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
-    var busDays: [BusDayItem]
-    var numDays: Int
-    var displayDay: Int
-    var addresses: [[String: String]]
+    var busRresponse: BusResponseItem!
+    var displayDay: Int!
     @IBOutlet weak var prevDayButton: UIBarButtonItem!
     @IBOutlet weak var nextDayButton: UIBarButtonItem!
     var panGesture: UIPanGestureRecognizer!
     
     required init?(coder aDecoder: NSCoder) {
-        busDays = [BusDayItem]()
-        numDays = 0
         displayDay = 0
-        addresses = [[String: String]]()
         super.init(coder: aDecoder)
     }
     
@@ -89,8 +85,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showAddressesSegue" {
             let destination = segue.destination as! AddressViewController
-            destination.addressArray = self.addresses
-            print(self.addresses)
+            destination.addresses = busRresponse.addresses
         }
     }
     
@@ -100,13 +95,13 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
 
     func reloadData() {
         tableView.reloadData()
-        if busDays.count != 0 {
-            self.navigationItem.title = self.busDays[self.displayDay].day
+        if busRresponse.buses.count != 0 {
+            self.navigationItem.title = busRresponse.buses[displayDay].day
         }
     }
     
     func configureDayButtons() {
-        if busDays.count == 0 {
+        if busRresponse.buses.count == 0 {
             prevDayButton.isEnabled = false
             nextDayButton.isEnabled = false
         } else {
@@ -116,7 +111,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
                 prevDayButton.isEnabled = true
             }
             
-            if displayDay == numDays - 1 {
+            if displayDay == busRresponse.buses.count - 1 {
                 nextDayButton.isEnabled = false
             } else {
                 nextDayButton.isEnabled = true
@@ -133,7 +128,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     }
     
     @IBAction func nextDay(_ sender: Any) {
-        if displayDay != numDays - 1 {
+        if displayDay != busRresponse.buses.count - 1 {
             displayDay += 1
             configureDayButtons()
             reloadData()
@@ -152,17 +147,17 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if busDays.count != 0 {
-            return busDays[displayDay].busItems.count
+        if busRresponse.buses.count != 0 {
+            return busRresponse.buses[displayDay].buses.count
         } else {
             return 0
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let busDay = busDays[displayDay]
-        let busItem = busDay.busItems[indexPath.row]
-        let name = busItem.name
+        let busDay = busRresponse.buses[displayDay]
+        let busItem = busDay.buses[indexPath.row]
+        let name = busItem.bus
         let time = busItem.time
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "busCell", for: indexPath)
@@ -190,49 +185,63 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     }
     
     @IBAction func refresh(_ sender: Any) {
-        scrapeBuses { busTuple in
-            self.busDays = busTuple.0
-            self.addresses = busTuple.1
+        scrapeBuses { busResponse in
+            self.busRresponse = busResponse
             DispatchQueue.main.async {
                 self.reloadData()
-                self.numDays = self.busDays.count
-                self.configureDayButtons()
-                print(self.addresses)
             }
         }
     }
     
-    func scrapeBuses(completion: @escaping (([BusDayItem], [[String: String]])) -> Void) {
-        let config = URLSessionConfiguration.default
-        //config.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/buses.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        var busDays = [BusDayItem]()
-        var addresses = [[String: String]]()
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    let busJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                    addresses = busJSON?["addresses"] as! [[String: String]]
-                    let busDaysArrayJSON = busJSON?["buses"] as! [[String: Any]]?
-                    for busDay in busDaysArrayJSON! {
-                        var newBusDay = BusDayItem(day: busDay["day"] as! String, busItems: [])
-                        for busItem in busDay["buses"] as! [[String: String]] {
-                            var newBusItem = BusItem(name: busItem["bus"]!, time: busItem["time"]!)
-                            newBusDay.busItems.append(newBusItem)
-                        }
-                        busDays.append(newBusDay)
-                    }
-                    completion((busDays, addresses))
+    func scrapeBuses(completion: @escaping (BusResponseItem?) -> Void) {
+        URLCache.shared.removeAllCachedResponses()
+        Alamofire.request("https://www.ciaconline.org/assets/buses.json", method: .get).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                if let busResponse = try? decoder.decode(BusResponseItem.self, from: data) {
+                    completion(busResponse)
+                } else {
+                    completion(nil)
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
             }
-            catch { print("Scrape buses error")}
         }
-        task.resume()
     }
+//
+//    func scrapeBuses(completion: @escaping (([BusDayItem], [[String: String]])) -> Void) {
+//        let config = URLSessionConfiguration.default
+//        //config.waitsForConnectivity = true
+//        let defaultSession = URLSession(configuration: config)
+//        let url = URL(string: "https://www.ciaconline.org/assets/buses.json")
+//        let request = NSMutableURLRequest(url: url!)
+//        request.cachePolicy = .reloadIgnoringLocalCacheData
+//        var busDays = [BusDayItem]()
+//        var addresses = [[String: String]]()
+//        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+//            do {
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+//                    let busJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+//                    addresses = busJSON?["addresses"] as! [[String: String]]
+//                    let busDaysArrayJSON = busJSON?["buses"] as! [[String: Any]]?
+//                    for busDay in busDaysArrayJSON! {
+//                        var newBusDay = BusDayItem(day: busDay["day"] as! String, busItems: [])
+//                        for busItem in busDay["buses"] as! [[String: String]] {
+//                            var newBusItem = BusItem(name: busItem["bus"]!, time: busItem["time"]!)
+//                            newBusDay.busItems.append(newBusItem)
+//                        }
+//                        busDays.append(newBusDay)
+//                    }
+//                    completion((busDays, addresses))
+//                }
+//            }
+//            catch { print("Scrape buses error")}
+//        }
+//        task.resume()
+//    }
 
 }
