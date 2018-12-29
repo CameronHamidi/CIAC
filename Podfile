@@ -8,4 +8,5 @@ use_frameworks!
 target 'CIAC' do
 	pod 'Alamofire'
 	pod 'SwiftyJSON'
+	pod 'SDWebImage'
 end

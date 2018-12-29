@@ -28,8 +28,8 @@ class ScheduleTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         //schedule = scrapeSchedule()
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)//action: #selector(addTapped))
-        navigationController!.toolbarItems = [add]
+//        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)//action: #selector(addTapped))
+//        navigationController!.toolbarItems = [add]
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
@@ -73,16 +73,15 @@ class ScheduleTableViewController: UITableViewController {
             prevDayButton.isEnabled = false
             nextDayButton.isEnabled = false
         } else {
+            prevDayButton.isEnabled = true
+            nextDayButton.isEnabled = true
+            
             if displayDay == 0 {
                 prevDayButton.isEnabled = false
-            } else {
-                prevDayButton.isEnabled = true
             }
             
             if displayDay == numDays! - 1 {
                 nextDayButton.isEnabled = false
-            } else {
-                nextDayButton.isEnabled = true
             }
         }
     }
@@ -123,6 +122,7 @@ class ScheduleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dayItem = schedule[displayDay]
+        print("display day = \(displayDay)")
         let eventItem = dayItem.events[indexPath.row]
         let identifier = eventItem.identifier
         let eventOrTimeText = eventItem.event
@@ -135,7 +135,8 @@ class ScheduleTableViewController: UITableViewController {
         } else if identifier == "time" || identifier == "location" {
            label.sizeToFit()
         }
-        return UITableViewCell()
+        
+        return cell
         
     }
     
@@ -165,9 +166,6 @@ class ScheduleTableViewController: UITableViewController {
                 self.reloadData()
                 self.numDays = self.schedule.count
                 self.configureDayButtons()
-                for i in self.schedule[0].events {
-                    print(i.event)
-                }
             }
         }
     }
@@ -191,7 +189,7 @@ class ScheduleTableViewController: UITableViewController {
     func scrapeSchedule(completion: @escaping ([DayItem]?) -> Void) {
         var schedule = [DayItem]()
         URLCache.shared.removeAllCachedResponses()
-        Alamofire.request("https://www.ciaconline.org/assets/schedule.json", method: .get).validate().responseData { response in
+        Alamofire.request("https://thecias.github.io/CIAC/schedule.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 do {
@@ -212,7 +210,6 @@ class ScheduleTableViewController: UITableViewController {
 
     func organizeScheduleJSON(dayJSON: JSON) -> DayItem {
         var events = [EventItem]()
-        print(type(of: dayJSON["information"]))
         for (index,event):(String, JSON) in dayJSON["eventTimes"] {
             if event["information"] != nil {
                 events.append(EventItem(event: event["event"].string!, identifier: "eventDDI", information: event["information"].string!))

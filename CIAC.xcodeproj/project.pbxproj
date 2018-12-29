@@ -250,11 +250,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CIAC/Pods-CIAC-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,7 +468,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "45399245-8fcb-4661-bfea-ed9b0c250865";
-				PROVISIONING_PROFILE_SPECIFIER = "CIAC Development Profile";
+				PROVISIONING_PROFILE_SPECIFIER = CIACDevelopmentProfile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -491,7 +493,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ciac.CIAC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e475f322-07eb-4df8-866e-64cc8f91866c";
-				PROVISIONING_PROFILE_SPECIFIER = "CIAC Distribution Profile";
+				PROVISIONING_PROFILE_SPECIFIER = CIACDistributionProfile;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

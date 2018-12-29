@@ -100,7 +100,7 @@ class HeadDelMeetingsTableViewController: UITableViewController {
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/headDelData.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var scrapedMeetings = [MeetingItem]()

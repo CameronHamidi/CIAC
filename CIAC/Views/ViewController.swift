@@ -171,7 +171,7 @@ class ViewController: UIViewController, EnterPassword {
     func scrapePassword(completion: @escaping ((String, String)) -> Void) {
         let config = URLSessionConfiguration.default
         let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://www.ciaconline.org/assets/appData.json")
+        let url = URL(string: "https://thecias.github.io/CIAC/appData.json")
         let request = NSMutableURLRequest(url: url!)
         request.cachePolicy = .reloadIgnoringLocalCacheData
         var headDelPassword = ""

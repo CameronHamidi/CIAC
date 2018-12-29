@@ -48,9 +48,9 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
     @IBAction func call(_ sender: Any) {
         let fullNumber = (sender as! UIButton).currentTitle!
         var trimmedNumber = fullNumber.replacingOccurrences(of: "(", with: "")
-        trimmedNumber = fullNumber.replacingOccurrences(of: ")", with: "")
-        trimmedNumber = fullNumber.replacingOccurrences(of: " ", with: "")
-        trimmedNumber = fullNumber.replacingOccurrences(of: "-", with: "")
+        trimmedNumber = trimmedNumber.replacingOccurrences(of: ")", with: "")
+        trimmedNumber = trimmedNumber.replacingOccurrences(of: " ", with: "")
+        trimmedNumber = trimmedNumber.replacingOccurrences(of: "-", with: "")
         
         let numberURL = URL(string: "tel://\(trimmedNumber)")!
         UIApplication.shared.open(numberURL)
@@ -65,7 +65,7 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
         
-        sgLabel.text = secretariatInfo[0].role
+//        sgLabel.text = secretariatInfo[0].role
         sgName.text = secretariatInfo[0].name
         sgEmail.setTitle(secretariatInfo[0].email, for: .normal)
         
@@ -97,7 +97,7 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/headDelData.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var secretariatInfoJSON = JSON()

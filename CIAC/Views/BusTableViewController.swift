@@ -11,7 +11,7 @@ import Alamofire
 
 class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
-    var busRresponse: BusResponseItem!
+    var busResponse: BusResponseItem!
     var displayDay: Int!
     @IBOutlet weak var prevDayButton: UIBarButtonItem!
     @IBOutlet weak var nextDayButton: UIBarButtonItem!
@@ -85,7 +85,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showAddressesSegue" {
             let destination = segue.destination as! AddressViewController
-            destination.addresses = busRresponse.addresses
+            destination.addresses = busResponse.addresses
         }
     }
     
@@ -95,13 +95,13 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
 
     func reloadData() {
         tableView.reloadData()
-        if busRresponse.buses.count != 0 {
-            self.navigationItem.title = busRresponse.buses[displayDay].day
+        if busResponse.buses.count != 0 {
+            self.navigationItem.title = busResponse.buses[displayDay].day
         }
     }
     
     func configureDayButtons() {
-        if busRresponse.buses.count == 0 {
+        if busResponse.buses.count == 0 {
             prevDayButton.isEnabled = false
             nextDayButton.isEnabled = false
         } else {
@@ -111,7 +111,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
                 prevDayButton.isEnabled = true
             }
             
-            if displayDay == busRresponse.buses.count - 1 {
+            if displayDay == busResponse.buses.count - 1 {
                 nextDayButton.isEnabled = false
             } else {
                 nextDayButton.isEnabled = true
@@ -128,7 +128,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     }
     
     @IBAction func nextDay(_ sender: Any) {
-        if displayDay != busRresponse.buses.count - 1 {
+        if displayDay != busResponse.buses.count - 1 {
             displayDay += 1
             configureDayButtons()
             reloadData()
@@ -147,15 +147,15 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if busRresponse.buses.count != 0 {
-            return busRresponse.buses[displayDay].buses.count
-        } else {
+        if busResponse == nil || busResponse.buses.count == 0 {
             return 0
+        } else {
+            return busResponse.buses[displayDay].buses.count
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let busDay = busRresponse.buses[displayDay]
+        let busDay = busResponse.buses[displayDay]
         let busItem = busDay.buses[indexPath.row]
         let name = busItem.bus
         let time = busItem.time
@@ -186,7 +186,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     
     @IBAction func refresh(_ sender: Any) {
         scrapeBuses { busResponse in
-            self.busRresponse = busResponse
+            self.busResponse = busResponse
             DispatchQueue.main.async {
                 self.reloadData()
             }
@@ -195,7 +195,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     
     func scrapeBuses(completion: @escaping (BusResponseItem?) -> Void) {
         URLCache.shared.removeAllCachedResponses()
-        Alamofire.request("https://www.ciaconline.org/assets/buses.json", method: .get).validate().responseData { response in
+        Alamofire.request("https://thecias.github.io/CIAC/buses.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let decoder = JSONDecoder()
@@ -215,7 +215,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/buses.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/buses.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var busDays = [BusDayItem]()

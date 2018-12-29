@@ -99,7 +99,7 @@ class HeadDelTableViewController: UITableViewController {
     
     func scrapeInfo(completion: @escaping (HeadDelDataResponse?) -> Void) {
         URLCache.shared.removeAllCachedResponses()
-        Alamofire.request("https://www.ciaconline.org/assets/headDelData.json", method: .get).validate().responseData { response in
+        Alamofire.request("https://thecias.github.io/CIAC/headDelData.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 do {
@@ -122,7 +122,7 @@ class HeadDelTableViewController: UITableViewController {
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/headDelData.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/headDelData.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var secretariatInfoJSON = JSON()

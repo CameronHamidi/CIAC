@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SDWebImage
 
 private let reuseIdentifier = "Cell"
 
@@ -73,7 +74,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
         let roomLabel = cell.viewWithTag(1001) as! UILabel
         roomLabel.text = rooms[indexPath.row].rooms[sessionNumber]
         let committeeImage = cell.viewWithTag(1004) as! UIImageView
-        committeeImage.image = UIImage(named: roomItem.image)
+        committeeImage.sd_setImage(with: URL(string: "https://thecias.github.io/CIAC/CommitteeImages/" + roomItem.image), completed: nil)
     
         let mainView = cell.viewWithTag(1003) as! UIView
         
@@ -155,7 +156,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
     
     func scrapeRooms(completion: @escaping (RoomResponse?) -> Void) {
         URLCache.shared.removeAllCachedResponses()
-        Alamofire.request("https://www.ciaconline.org/assets/rooms.json", method: .get).validate().responseData { response in
+        Alamofire.request("https://thecias.github.io/CIAC/rooms.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let decoder = JSONDecoder()
@@ -175,7 +176,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/rooms.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/rooms.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var readRooms = [RoomItem]()

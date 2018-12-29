@@ -19,8 +19,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Le9-Bu-nNR">
-                                <rect key="frame" x="16" y="20" width="288" height="23.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <rect key="frame" x="16" y="20" width="288" height="22.5"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
@@ -216,7 +216,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aD-6F-exc">
                                             <rect key="frame" x="16" y="11" width="262" height="21"/>
-                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                            <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="20"/>
                                             <nil key="highlightedColor"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
@@ -469,7 +469,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="UTL-yD-OrY"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -485,7 +485,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="c5D-eB-6Xk"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -553,7 +553,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Committee Session I:     Test" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9T6-MF-MnN">
                                 <rect key="frame" x="20" y="15" width="280" height="425"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -688,7 +688,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="27" id="Rar-oX-hQg"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="23"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -699,7 +699,7 @@
                                                     <constraint firstAttribute="height" constant="500" id="QGY-gE-Gfa"/>
                                                 </constraints>
                                                 <string key="text">Committee Session I: Hollister B04  Committee Session II: Hollister B04  Committee Session III: Hollister B04  Committee Session IV: Hollister B04  Committee Session V: Hollister B04  Committee Session VI: Hollister B04  Committee Session VII: Hollister B04</string>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
@@ -773,7 +773,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="event" id="Nhi-b4-Jb1">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="event" id="Nhi-b4-Jb1">
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nhi-b4-Jb1" id="S3p-FZ-YgW">
@@ -797,7 +797,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="eventDDI" id="dKb-Fu-y1G">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="eventDDI" id="dKb-Fu-y1G">
                                 <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dKb-Fu-y1G" id="mJY-KJ-F7P">
@@ -820,7 +820,7 @@
                                 </tableViewCellContentView>
                                 <color key="tintColor" red="0.70196078429999997" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="location" id="hMp-jU-ZFx">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="location" id="hMp-jU-ZFx">
                                 <rect key="frame" x="0.0" y="116" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hMp-jU-ZFx" id="txM-Uc-srx">
@@ -848,11 +848,10 @@
                                         <constraint firstItem="pJH-vm-Ydd" firstAttribute="leading" secondItem="pnb-T3-pzI" secondAttribute="trailing" constant="5" id="LDj-ln-4cB"/>
                                         <constraint firstItem="pJH-vm-Ydd" firstAttribute="top" secondItem="txM-Uc-srx" secondAttribute="top" id="UI9-2M-cwk"/>
                                         <constraint firstItem="pnb-T3-pzI" firstAttribute="leading" secondItem="txM-Uc-srx" secondAttribute="leading" constant="25" id="ZCS-qa-kiR"/>
-                                        <constraint firstItem="pJH-vm-Ydd" firstAttribute="leading" secondItem="txM-Uc-srx" secondAttribute="leadingMargin" constant="39" id="cxG-wl-rQ8"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="time" id="vAL-9s-Vy4">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="time" id="vAL-9s-Vy4">
                                 <rect key="frame" x="0.0" y="160" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vAL-9s-Vy4" id="qUQ-ww-kr9">
@@ -860,7 +859,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ivo-Gm-Bhc">
-                                            <rect key="frame" x="55" y="0.0" width="249" height="44"/>
+                                            <rect key="frame" x="55" y="12.5" width="249" height="19"/>
                                             <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
@@ -874,13 +873,11 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ivo-Gm-Bhc" firstAttribute="leading" secondItem="4oY-P5-iC8" secondAttribute="trailing" constant="5" id="5Uv-pf-xKX"/>
-                                        <constraint firstItem="4oY-P5-iC8" firstAttribute="leading" secondItem="qUQ-ww-kr9" secondAttribute="leading" constant="25" id="Hck-EW-Wwb"/>
-                                        <constraint firstItem="ivo-Gm-Bhc" firstAttribute="leading" secondItem="qUQ-ww-kr9" secondAttribute="leadingMargin" constant="39" id="P39-TD-kU7"/>
-                                        <constraint firstItem="ivo-Gm-Bhc" firstAttribute="top" secondItem="qUQ-ww-kr9" secondAttribute="top" id="aQQ-lJ-1gV"/>
-                                        <constraint firstItem="ivo-Gm-Bhc" firstAttribute="trailing" secondItem="qUQ-ww-kr9" secondAttribute="trailingMargin" id="bR9-px-0dI"/>
-                                        <constraint firstItem="4oY-P5-iC8" firstAttribute="centerY" secondItem="qUQ-ww-kr9" secondAttribute="centerY" id="g8h-Aj-VLr"/>
-                                        <constraint firstAttribute="bottom" secondItem="ivo-Gm-Bhc" secondAttribute="bottom" id="l5M-OM-la3"/>
+                                        <constraint firstItem="4oY-P5-iC8" firstAttribute="centerY" secondItem="qUQ-ww-kr9" secondAttribute="centerY" id="EIp-PQ-99h"/>
+                                        <constraint firstItem="ivo-Gm-Bhc" firstAttribute="centerY" secondItem="qUQ-ww-kr9" secondAttribute="centerY" id="SZv-cX-yN4"/>
+                                        <constraint firstItem="4oY-P5-iC8" firstAttribute="leading" secondItem="qUQ-ww-kr9" secondAttribute="leading" constant="25" id="dsi-Zg-viu"/>
+                                        <constraint firstItem="ivo-Gm-Bhc" firstAttribute="leading" secondItem="4oY-P5-iC8" secondAttribute="trailing" constant="5" id="fox-UX-xqt"/>
+                                        <constraint firstAttribute="trailing" secondItem="ivo-Gm-Bhc" secondAttribute="trailing" constant="16" id="wbN-PE-vU4"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -944,34 +941,34 @@
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sg name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WA7-XI-End">
-                                <rect key="frame" x="45" y="55" width="259" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="45" y="55" width="259" height="19"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Director-General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGw-SX-oXd">
-                                <rect key="frame" x="16" y="152" width="254" height="29"/>
+                                <rect key="frame" x="16" y="150" width="254" height="29"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dg name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wi0-aQ-Onu">
-                                <rect key="frame" x="45" y="187" width="259" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="45" y="185" width="259" height="19"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="flc-qn-j9j">
-                                <rect key="frame" x="45" y="76" width="259" height="32"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="45" y="75" width="259" height="31"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                 <state key="normal" title="sg email"/>
                                 <connections>
                                     <action selector="emailButton:" destination="xY5-62-E4x" eventType="touchUpInside" id="PE6-MI-NXG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXN-Bl-lyC">
-                                <rect key="frame" x="45" y="208" width="259" height="32"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <rect key="frame" x="45" y="205" width="259" height="31"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="17"/>
                                 <state key="normal" title="dg email"/>
                                 <connections>
                                     <action selector="emailButton:" destination="xY5-62-E4x" eventType="touchUpInside" id="ZIE-fU-SFx"/>
@@ -1235,7 +1232,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="busCell" rowHeight="77" id="jhn-OH-t1J">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="busCell" rowHeight="77" id="jhn-OH-t1J">
                                 <rect key="frame" x="0.0" y="28" width="320" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jhn-OH-t1J" id="eXI-v9-RBC">
@@ -1243,14 +1240,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bus loop" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOW-Mb-aFh">
-                                            <rect key="frame" x="16" y="11" width="288" height="26"/>
-                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                            <rect key="frame" x="16" y="11" width="288" height="22.5"/>
+                                            <fontDescription key="fontDescription" name="Palatino-Bold" family="Palatino" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Rb-KB-ycC">
-                                            <rect key="frame" x="41" y="45" width="263" height="23"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                            <rect key="frame" x="41" y="41.5" width="263" height="21"/>
+                                            <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="19"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1321,7 +1318,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VH4-sx-PHe">
                                 <rect key="frame" x="20" y="20" width="280" height="420"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>

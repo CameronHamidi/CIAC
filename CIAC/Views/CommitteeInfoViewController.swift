@@ -7,21 +7,22 @@
 //
 
 import UIKit
+import SDWebImage
 
 class CommitteeInfoViewController: UIViewController {
 
     
     @IBOutlet weak var committeeImage: UIImageView!
     @IBOutlet weak var scheduleTextView: UITextView!
-    var committee: RoomItem?
-    var scheduleText: String?
+    var committee: RoomItem!
+    var scheduleText: String!
     @IBOutlet weak var committeeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //navigationController?.title = committee!.committee
         scheduleTextView.text = scheduleText!
-        committeeImage.image = UIImage(named: committee!.image)
+        committeeImage.sd_setImage(with: URL(string: "https://thecias.github.io/CIAC/CommitteeImages/" + committee!.image), completed: nil)
         committeeLabel.text = committee!.committee
         // Do any additional setup after loading the view.
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))

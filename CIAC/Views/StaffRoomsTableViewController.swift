@@ -47,7 +47,11 @@ class StaffRoomsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return staffResponse.staffRooms.count
+        if staffResponse != nil {
+            return staffResponse.staffRooms.count
+        } else {
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,13 +100,14 @@ class StaffRoomsTableViewController: UITableViewController {
     
     func scrapeStaffRooms(completion: @escaping (StaffResponseItem?) -> Void) {
         URLCache.shared.removeAllCachedResponses()
-        Alamofire.request("https://www.ciaconline.org/assets/staff.json", method: .get).validate().responseData { response in
+        Alamofire.request("https://thecias.github.io/CIAC/staff.json", method: .get).validate().responseData { response in
             switch response.result {
             case .success(let data):
                 let decoder = JSONDecoder()
                 if let staffResponse = try? decoder.decode(StaffResponseItem.self, from: data) {
                     completion(staffResponse)
                 } else {
+                    print("error")
                     completion(nil)
                 }
             case .failure(let error):
@@ -116,7 +121,7 @@ class StaffRoomsTableViewController: UITableViewController {
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/staff.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/staff.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var rooms = [RoomItem]()
@@ -146,7 +151,7 @@ class StaffRoomsTableViewController: UITableViewController {
 //        let config = URLSessionConfiguration.default
 //        //config.waitsForConnectivity = true
 //        let defaultSession = URLSession(configuration: config)
-//        let url = URL(string: "https://www.ciaconline.org/assets/rooms.json")
+//        let url = URL(string: "https://thecias.github.io/CIAC/rooms.json")
 //        let request = NSMutableURLRequest(url: url!)
 //        request.cachePolicy = .reloadIgnoringLocalCacheData
 //        var sessionNames = [String]()
