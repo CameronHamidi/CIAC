@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AF12AEF0AE258E1E76AEF68E /* Pods_CIAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51103425103186E5A95DCD40 /* Pods_CIAC.framework */; };
+		E603A44C21D83C7400B5EE53 /* AppDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E603A44B21D83C7400B5EE53 /* AppDataResponse.swift */; };
 		E60515F221D5C1F200403C96 /* HeadDelDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60515F121D5C1F200403C96 /* HeadDelDataResponse.swift */; };
 		E609C05D2174487900F137A1 /* CommitteeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E609C05C2174487900F137A1 /* CommitteeInfoViewController.swift */; };
 		E60C369021D5D99500657959 /* StaffResponseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60C368F21D5D99500657959 /* StaffResponseItem.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		51103425103186E5A95DCD40 /* Pods_CIAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E603A44B21D83C7400B5EE53 /* AppDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDataResponse.swift; sourceTree = "<group>"; };
 		E60515F121D5C1F200403C96 /* HeadDelDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadDelDataResponse.swift; sourceTree = "<group>"; };
 		E609C05C2174487900F137A1 /* CommitteeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitteeInfoViewController.swift; sourceTree = "<group>"; };
 		E60C368F21D5D99500657959 /* StaffResponseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffResponseItem.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		E606B06721D45849004CED8B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E603A44B21D83C7400B5EE53 /* AppDataResponse.swift */,
 				E60C369121D5DCBF00657959 /* BusResponseItem.swift */,
 				E6CA0D39215DA868006C271C /* EventItem.swift */,
 				E60515F121D5C1F200403C96 /* HeadDelDataResponse.swift */,
@@ -303,6 +306,7 @@
 				E6DD98D6218512C1005FF8EA /* StaffRoomsTableViewController.swift in Sources */,
 				E6DDC7442187603800F36CBB /* AddressViewController.swift in Sources */,
 				E6761FDA2166D0C5003CD4F8 /* RoomItem.swift in Sources */,
+				E603A44C21D83C7400B5EE53 /* AppDataResponse.swift in Sources */,
 				E6DD2DC72186E14F009F7638 /* StaffRoomDetailViewController.swift in Sources */,
 				E6CA0D57215DAAFB006C271C /* HeadDelTableViewController.swift in Sources */,
 				E60C369221D5DCBF00657959 /* BusResponseItem.swift in Sources */,

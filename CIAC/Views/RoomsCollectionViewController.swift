@@ -19,14 +19,13 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
     var selectedRoom: Int
     var sessionNumber: Int
     var sessionNames: [String]
-    var numSessions: Int
+    var committeeTimes: [CommitteeTime]!
     
     required init?(coder aDecoder: NSCoder) {
         rooms = [RoomItem]()
         selectedRoom = 0
         sessionNumber = 0
         sessionNames = [String]()
-        numSessions = 0
         super.init(coder: aDecoder)
     }
     
@@ -38,7 +37,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
 
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        refresh()
+        refresh(self)
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
@@ -49,7 +48,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
             dismiss(animated: true, completion: nil)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -95,6 +94,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
         
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
 //        cell.translatesAutoresizingMaskIntoConstraints = false
 //        NSLayoutConstraint.activate([
 //            cell.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -125,7 +125,7 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
             let destination = segue.destination as! CommitteeInfoViewController
             destination.committee = rooms[selectedRoom]
             var committeeScheduleText = ""
-            for x in 0..<numSessions {
+            for x in 0..<committeeTimes.count {
                 committeeScheduleText.append(sessionNames[x] + ":\n\t" + rooms[selectedRoom].rooms[x] + "\n\n")
             }
             destination.scheduleText = committeeScheduleText
@@ -136,15 +136,28 @@ class RoomsCollectionViewController: UICollectionViewController, UICollectionVie
         dismiss(animated: true, completion: nil)
     }
     
-    func refresh() {
+    @IBAction func refresh(_ sender: Any) {
         scrapeRooms { roomResponse in
             if roomResponse != nil {
                 self.rooms = roomResponse!.rooms
-                self.sessionNumber = roomResponse!.session
                 self.sessionNames = roomResponse!.sessions
-                self.numSessions = roomResponse!.numSessions
                 DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
+                    self.rooms = self.rooms.sorted {
+                        $0.committee.replacingOccurrences(of: "The", with: "") < $1.committee.replacingOccurrences(of: "The", with: "")
+                    }
+                    let curDate = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+                    dateFormatter.dateFormat = "MM-dd-yyyy HH:mm a"
+                    for i in 0..<self.committeeTimes.count {
+                        if curDate < dateFormatter.date(from: self.committeeTimes[i].end)! {
+                            self.sessionNumber = i
+                            self.collectionView?.reloadData()
+                            return
+                        }
+                    }
+                    
+                    self.showUnavailableRoomsAlert()
                 }
             } else {
                 DispatchQueue.main.async {

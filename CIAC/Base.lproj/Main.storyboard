@@ -122,6 +122,9 @@
                                 <action selector="close:" destination="gb9-fb-0Rc" id="vsV-Fl-Nfz"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="agU-fN-Mzd">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -192,6 +195,8 @@
                     <connections>
                         <outlet property="passwordEnterField" destination="Wbi-km-aG8" id="Ust-a7-muH"/>
                         <outlet property="passwordLabel" destination="JML-fF-s5s" id="h1W-Pk-52t"/>
+                        <segue destination="pmQ-6y-Nb4" kind="show" identifier="passwordToHeadDelView" id="9PT-ZH-gew"/>
+                        <segue destination="b6N-NO-7va" kind="show" identifier="passwordToStaffView" id="ccx-p1-Sed"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3d6-R9-mru" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -247,9 +252,11 @@
                     <connections>
                         <segue destination="xY5-62-E4x" kind="show" identifier="showSecretariatInfo" id="drM-Cd-CFQ"/>
                         <segue destination="gb9-fb-0Rc" kind="show" identifier="showHeadDelMeetings" id="GEi-C9-rua"/>
+                        <segue destination="1Cl-mF-5A1" kind="unwind" identifier="unwindToMain" unwindAction="unwindToMainWithSegue:" id="1sO-vn-Lze"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z6J-qx-rN4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1Cl-mF-5A1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="37.5" y="24.295774647887324"/>
         </scene>
@@ -291,7 +298,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="o25-XM-ewO" kind="show" id="jOC-g7-bMQ"/>
+                                    <segue destination="o25-XM-ewO" kind="show" identifier="showRooms" id="jOC-g7-bMQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eST-7w-R4x">
@@ -304,7 +311,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="nyV-rJ-xuu" kind="show" identifier="schedule" id="OEE-nK-Yay"/>
+                                    <segue destination="nyV-rJ-xuu" kind="show" identifier="showSchedule" id="OEE-nK-Yay"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rooms" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45a-Kr-tWm">
@@ -369,7 +376,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Isi-Pj-Spn" kind="show" id="zqK-ze-lnF"/>
+                                    <segue destination="Isi-Pj-Spn" kind="show" identifier="showBusLoops" id="zqK-ze-lnF"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Trk-OE-bbF">
@@ -533,6 +540,12 @@
                                 <action selector="close:" destination="cFB-vt-MuE" id="6E5-iw-qzK"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="jgB-Pd-Gx7">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="refresh:" destination="cFB-vt-MuE" id="ZZV-cp-nDR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="UbA-yX-J2K" kind="show" identifier="showCommitteeSegue" id="Zgn-tn-Sus"/>
@@ -643,12 +656,20 @@
                                 <action selector="close:" destination="e1r-Mq-kVQ" id="PJ7-sE-JMF"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="RcX-XC-O9c">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="refresh:" destination="e1r-Mq-kVQ" id="yzt-Pc-anb"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="XJp-15-lLZ" kind="show" identifier="staffRoomsDetailViewSegue" id="4qo-ey-rU2"/>
+                        <segue destination="jWO-Ud-nMX" kind="unwind" identifier="unwindToMain" unwindAction="unwindToMainWithSegue:" id="Tez-cq-Xeg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BO8-IT-af3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="jWO-Ud-nMX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="38" y="784"/>
         </scene>
@@ -1276,6 +1297,12 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="HqR-sA-5Cx"/>
+                        <barButtonItem title="Addresses" id="1Bx-z3-M3t">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="KcS-On-xiB" kind="show" identifier="showAddressesSegue" id="rIm-TC-iPp"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem systemItem="fastForward" id="xGP-iy-EbM">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -1290,10 +1317,10 @@
                                 <action selector="close:" destination="P2E-Ea-uZG" id="9po-wM-Zrc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Addresses" id="1Bx-z3-M3t">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="842-88-Maw">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="KcS-On-xiB" kind="show" identifier="showAddressesSegue" id="rIm-TC-iPp"/>
+                                <action selector="refresh:" destination="P2E-Ea-uZG" id="PEL-Il-PjH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1389,6 +1416,8 @@
         <image name="time_white" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ccx-p1-Sed"/>
+        <segue reference="9PT-ZH-gew"/>
         <segue reference="n89-uK-Pho"/>
     </inferredMetricsTieBreakers>
 </document>

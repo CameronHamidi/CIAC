@@ -9,15 +9,20 @@
 import UIKit
 
 protocol EnterPassword: class {
-    func enterPassword(enterPassword: String, correctPassword: Bool, passwordType: String)
+    func enterPassword(enterPassword: String, correctPassword: Bool, passwordType: PasswordType)
+}
+
+enum PasswordType {
+    case headDel
+    case staff
 }
 
 class PasswordEnterViewController: UIViewController {
 
     var viewControllerDelegate: ViewController?
     var correctPassword: String?
-    var passwordType: String?
-    
+    var passwordType: PasswordType!
+    var committeeTimes: [CommitteeTime]!
     
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordEnterField: UITextField!
@@ -27,21 +32,38 @@ class PasswordEnterViewController: UIViewController {
     }
     
     @IBAction func done(_ sender: Any) {
-        print("button press: \(correctPassword!)")
         if passwordEnterField.text == correctPassword! {
             if viewControllerDelegate != nil {
-                viewControllerDelegate!.enterPassword(enterPassword: passwordEnterField.text!, correctPassword: true, passwordType: passwordType!)
+                viewControllerDelegate!.enterPassword(enterPassword: passwordEnterField.text!, correctPassword: true, passwordType: passwordType)
             }
-            dismiss(animated: true, completion: nil)
+            switch passwordType! {
+            case .headDel:
+                performSegue(withIdentifier: "passwordToHeadDelView", sender: self)
+            case .staff:
+                performSegue(withIdentifier: "passwordToStaffView", sender: self)
+            }
         } else {
             let alert = UIAlertController(title: "Incorrect Password", message: "Please enter the correct password. If you have forgotten the password, contact the Secretary-General or Director-General", preferredStyle: .alert)
             let action = UIAlertAction(title: "Ok", style: .default, handler: {
                 action in
-                self.dismiss(animated: true, completion: nil)
+                self.cancel(self)
             })
             
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "passwordToHeadDelView" {
+            let navController = segue.destination as! UINavigationController
+            let headDelView = navController.childViewControllers[0] as! HeadDelTableViewController
+            headDelView.delegate = self
+        } else if segue.identifier == "passwordToStaffView" {
+            let navController = segue.destination as! UINavigationController
+            let staffView = navController.childViewControllers[0] as! StaffRoomsTableViewController
+            staffView.committeeTimes = self.committeeTimes
+            staffView.delegate = self
         }
     }
     

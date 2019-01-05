@@ -16,26 +16,28 @@ class ViewController: UIViewController, EnterPassword {
     @IBOutlet weak var scheduleSelectButton: UIButton!
     @IBOutlet weak var staffersSelectButton: UIButton!
     
-    var headDelPasswordScraped: String
-    var headDelPasswordStored: String
-    var headDelEnabled: Bool
+    var headDelPasswordScraped: String!
+    var headDelPasswordStored: String!
+    var headDelEnabled: Bool!
     
-    var staffPasswordScraped: String
-    var staffPasswordStored: String
-    var staffEnabled: Bool
-
+    var staffPasswordScraped: String!
+    var staffPasswordStored: String!
+    var staffEnabled: Bool!
     
-    func enterPassword(enterPassword: String, correctPassword: Bool, passwordType: String) {
+    var startDate: Date!
+    var numConferenceDays: Int!
+    
+    var committeeTimes: [CommitteeTime]!
+    
+    func enterPassword(enterPassword: String, correctPassword: Bool, passwordType: PasswordType) {
         if correctPassword {
-            if passwordType == "Head Delegate" {
+            switch passwordType {
+            case .headDel:
                 headDelPasswordStored = enterPassword
                 headDelEnabled = true
-                print("perform")
-                self.performSegue(withIdentifier: "showHeadDelTableView", sender: self)
-            } else if passwordType == "staff" {
+            case .staff:
                 staffPasswordStored = enterPassword
                 staffEnabled = true
-                self.performSegue(withIdentifier: "showStaffView", sender: self)
             }
             DispatchQueue.main.async {
                 self.storePassword()
@@ -44,6 +46,12 @@ class ViewController: UIViewController, EnterPassword {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         self.headDelEnabled = false
         self.headDelPasswordScraped = ""
         self.headDelPasswordStored = ""
@@ -52,13 +60,20 @@ class ViewController: UIViewController, EnterPassword {
         self.staffPasswordStored = ""
         self.staffEnabled = false
         
-        super.init(coder: aDecoder)
         checkPassword()
+
+        self.headDelsSelectButton.isEnabled = false
+        self.staffersSelectButton.isEnabled = false
+        self.roomAssignmentsSelectButton.isEnabled = true
+        // Do any additional setup after loading the view, typically from a nib.
+        
+    }
+    
+    @IBAction func unwindToMain(segue: UIStoryboardSegue) {
+        
     }
     
     @IBAction func headDelButtonPressed(_ sender: Any) {
-        //checkHeadDelPassword()
-        print("checked: \(headDelPasswordScraped)")
         if !self.headDelEnabled && headDelPasswordScraped != "" {
             self.performSegue(withIdentifier: "enterHeadDelPassword", sender: self)
         } else if headDelEnabled {
@@ -67,8 +82,6 @@ class ViewController: UIViewController, EnterPassword {
     }
     
     @IBAction func staffersButtonPressed(_ sender: Any) {
-        print("staff button pressed")
-        print(staffPasswordScraped)
         if !self.staffEnabled && staffPasswordScraped != "" {
             self.performSegue(withIdentifier: "enterStaffPassword", sender: self)
         } else if staffEnabled {
@@ -77,30 +90,43 @@ class ViewController: UIViewController, EnterPassword {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "enterHeadDelPassword" {
+        if segue.identifier == "enterHeadDelPassword" || segue.identifier == "enterStaffPassword" {
             let enterPasswordController = segue.destination as! PasswordEnterViewController
             enterPasswordController.viewControllerDelegate = self
-            enterPasswordController.passwordType = "Head Delegate"
-            enterPasswordController.correctPassword = headDelPasswordScraped
+            enterPasswordController.committeeTimes = self.committeeTimes
+            if segue.identifier == "enterHeadDelPassword" {
+                enterPasswordController.passwordType = .headDel
+                enterPasswordController.correctPassword = headDelPasswordScraped
+            } else if segue.identifier == "enterStaffPassword" {
+                enterPasswordController.passwordType = .staff
+                enterPasswordController.correctPassword = staffPasswordScraped
+            }
         } else if segue.identifier == "showHeadDelTableView" {
-            print("prepare")
+//            print("prepare")
         } else if segue.identifier == "enterStaffPassword" {
             let enterPasswordController = segue.destination as! PasswordEnterViewController
             enterPasswordController.viewControllerDelegate = self
-            enterPasswordController.passwordType = "staff"
-            enterPasswordController.correctPassword = staffPasswordScraped
-        } else if segue.identifier == "showStaffView" {
             
+        } else if segue.identifier == "showBusLoops" {
+            let navController = segue.destination as! UINavigationController
+            let busController = navController.childViewControllers[0] as! BusTableViewController
+            busController.startDate = self.startDate
+            busController.numDays = self.numConferenceDays
+        } else if segue.identifier == "showSchedule" {
+            let navController = segue.destination as! UINavigationController
+            let scheduleController = navController.childViewControllers[0] as! ScheduleTableViewController
+            scheduleController.startDate = self.startDate
+            scheduleController.numDays = self.numConferenceDays
+        } else if segue.identifier == "showStaffView" {
+            let navController = segue.destination as! UINavigationController
+            let staffController = navController.childViewControllers[0] as! StaffRoomsTableViewController
+            staffController.committeeTimes = self.committeeTimes
+        } else if segue.identifier == "showRooms" {
+            let navController = segue.destination as! UINavigationController
+            let roomsController = navController.childViewControllers[0] as! RoomsCollectionViewController
+            roomsController.committeeTimes = self.committeeTimes
         }
         //super.prepare(for: segue, sender: sender)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.headDelsSelectButton.isEnabled = false
-        self.staffersSelectButton.isEnabled = false
-        // Do any additional setup after loading the view, typically from a nib.
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,10 +136,9 @@ class ViewController: UIViewController, EnterPassword {
     
     func storePassword() {
         let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let passwordFileURL = documentDirectoryURL.appendingPathComponent("password").appendingPathExtension("json")
+        let passwordFileURL = documentDirectoryURL.appendingPathComponent("ciacPassword").appendingPathExtension("json")
         do {
             let encoder = JSONEncoder()
-            print("staff: \(staffPasswordStored)")
             let encodeJSON = ["headDelPassword": headDelPasswordStored, "staffPassword" : staffPasswordStored]
             let encodedData = try encoder.encode(encodeJSON)
             try encodedData.write(to: passwordFileURL)
@@ -125,7 +150,7 @@ class ViewController: UIViewController, EnterPassword {
     
     func checkPassword() {
         let documentDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let passwordFileURL = documentDirectoryURL.appendingPathComponent("password").appendingPathExtension("json")
+        let passwordFileURL = documentDirectoryURL.appendingPathComponent("ciacPassword").appendingPathExtension("json")
         
         do {
             let data = try Data(contentsOf: passwordFileURL)
@@ -143,59 +168,91 @@ class ViewController: UIViewController, EnterPassword {
         }
         catch {
             print("reading password file error")
+            print(error.localizedDescription)
             headDelPasswordStored = ""
             staffPasswordStored = ""
         }
 
-        scrapePassword { passwordTuple  in
-            self.headDelPasswordScraped = passwordTuple.0
-            self.staffPasswordScraped = passwordTuple.1
-            DispatchQueue.main.async {
-                if self.headDelPasswordStored == "" || self.headDelPasswordStored != passwordTuple.0 {
-                    self.headDelEnabled = false
-                } else {
-                    self.headDelEnabled = true
-                }
+        scrapePassword { appDataResponse  in
+            if appDataResponse == nil {
+                self.headDelEnabled = false
+                self.staffEnabled = false
                 self.headDelsSelectButton.isEnabled = true
-                
-                if self.staffPasswordStored == "" || self.staffPasswordStored != passwordTuple.1 {
-                    self.staffEnabled = false
-                } else {
-                    self.staffEnabled = true
-                }
                 self.staffersSelectButton.isEnabled = true
+            } else {
+                self.headDelPasswordScraped = appDataResponse!.headDelPassword
+                self.staffPasswordScraped = appDataResponse!.staffPassword
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+                dateFormatter.dateFormat = "MM-dd-yyyy"
+                self.startDate = dateFormatter.date(from: appDataResponse!.conferenceStartDate)
+                self.numConferenceDays = appDataResponse!.numConferenceDays
+                self.committeeTimes = appDataResponse!.committeeTimes
+                DispatchQueue.main.async {
+                    self.roomAssignmentsSelectButton.isEnabled = true
+                    if self.headDelPasswordStored == "" || self.headDelPasswordStored != self.headDelPasswordScraped {
+                        self.headDelEnabled = false
+                    } else {
+                        self.headDelEnabled = true
+                    }
+                    self.headDelsSelectButton.isEnabled = true
+                    
+                    if self.staffPasswordStored == "" || self.staffPasswordStored != self.staffPasswordScraped {
+                        self.staffEnabled = false
+                    } else {
+                        self.staffEnabled = true
+                    }
+                    self.staffersSelectButton.isEnabled = true
+                }
             }
         }
     }
     
-    func scrapePassword(completion: @escaping ((String, String)) -> Void) {
-        let config = URLSessionConfiguration.default
-        let defaultSession = URLSession(configuration: config)
-        let url = URL(string: "https://thecias.github.io/CIAC/appData.json")
-        let request = NSMutableURLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalCacheData
-        var headDelPassword = ""
-        var staffPassword = ""
-        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
-            do {
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    do {
-                        let decodedData = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                        print(decodedData)
-                        if decodedData["headDelPassword"] as! String? != nil {
-                            headDelPassword = decodedData["headDelPassword"]! as! String
-                        }
-                        if decodedData["staffPassword"] as! String? != nil {
-                            staffPassword = decodedData["staffPassword"]! as! String
-                        }
-                    }
-                    catch { print(error)}
+    func scrapePassword(completion: @escaping(AppDataResponse?) -> Void) {
+        URLCache.shared.removeAllCachedResponses()
+        Alamofire.request("https://thecias.github.io/CIAC/appData.json", method: .get).validate().responseData { response in
+            switch response.result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                if let appDataResponse = try? decoder.decode(AppDataResponse.self, from: data) {
+                    completion(appDataResponse)
+                } else {
+                    completion(nil)
                 }
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
             }
-            completion((headDelPassword, staffPassword))
         }
-        task.resume()
     }
+    
+//    func scrapePassword(completion: @escaping ((String, String)) -> Void) {
+//        let config = URLSessionConfiguration.default
+//        let defaultSession = URLSession(configuration: config)
+//        let url = URL(string: "https://thecias.github.io/CIAC/appData.json")
+//        let request = NSMutableURLRequest(url: url!)
+//        request.cachePolicy = .reloadIgnoringLocalCacheData
+//        var headDelPassword = ""
+//        var staffPassword = ""
+//        let task = defaultSession.dataTask(with: request as URLRequest) { data, response, error in
+//            do {
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+//                    do {
+//                        let decodedData = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+//                        if decodedData["headDelPassword"] as! String? != nil {
+//                            headDelPassword = decodedData["headDelPassword"]! as! String
+//                        }
+//                        if decodedData["staffPassword"] as! String? != nil {
+//                            staffPassword = decodedData["staffPassword"]! as! String
+//                        }
+//                    }
+//                    catch { print(error)}
+//                }
+//            }
+//            completion((headDelPassword, staffPassword))
+//        }
+//        task.resume()
+//    }
 }

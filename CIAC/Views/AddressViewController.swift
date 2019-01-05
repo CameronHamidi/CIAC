@@ -39,7 +39,8 @@ class AddressViewController: UIViewController {
     
     
     @IBAction func close(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
 

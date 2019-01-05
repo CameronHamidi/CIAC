@@ -11,7 +11,8 @@ import SwiftyJSON
 
 class HeadDelMeetingsTableViewController: UITableViewController {
 
-    var meetings: [MeetingItem]
+    var delegate: HeadDelTableViewController!
+    var meetings: [MeetingItem]!
     var detailViewDisplayMeeting: MeetingItem?
     
     override func viewDidLoad() {
@@ -25,6 +26,10 @@ class HeadDelMeetingsTableViewController: UITableViewController {
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
+    }
+    
+    @IBAction func refresh(_ sender: Any) {
+        delegate.refresh()
     }
     
     @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
@@ -84,7 +89,8 @@ class HeadDelMeetingsTableViewController: UITableViewController {
     }
     
     @IBAction func close(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
 //    func getMeetingData() {

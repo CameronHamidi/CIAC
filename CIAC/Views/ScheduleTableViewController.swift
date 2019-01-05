@@ -13,11 +13,12 @@ import SwiftyJSON
 
 class ScheduleTableViewController: UITableViewController {
 
-    var schedule: [DayItem]
-    var displayDay: Int
-    var numDays: Int?
+    var schedule: [DayItem]!
+    var displayDay: Int!
     @IBOutlet weak var prevDayButton: UIBarButtonItem!
     @IBOutlet weak var nextDayButton: UIBarButtonItem!
+    var startDate: Date!
+    var numDays: Int!
     
     
     override func viewDidLoad() {
@@ -37,6 +38,12 @@ class ScheduleTableViewController: UITableViewController {
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         leftSwipe.direction = .left
         view.addGestureRecognizer(leftSwipe)
+        
+        self.prevDayButton.isEnabled = false
+        self.nextDayButton.isEnabled = false
+        
+        setDate()
+        refresh(self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +51,43 @@ class ScheduleTableViewController: UITableViewController {
         self.schedule = [DayItem]()
         self.numDays = 0
         super.init(coder: aDecoder)
-        refresh(self)
+    }
+    
+    func setDate() {
+        var curDate = Date()
+        let calendar = Calendar.current
+        var curDay = calendar.component(.day, from: curDate)
+        if curDate < startDate {
+            displayDay = 0
+            return
+        }
+        
+        print(startDate)
+        print(curDate)
+        print(curDate < startDate)
+        
+        for i in 1..<numDays {
+            var newDate = calendar.date(byAdding: .day, value: i, to: startDate)
+            if curDate < newDate! {
+                displayDay = i - 1
+                return
+            }
+        }
+        if curDate < calendar.date(byAdding: .day, value: numDays, to: startDate)! {
+            displayDay = numDays - 1
+            return
+        }
+        noScheduleError()
+        
+    }
+    
+    func noScheduleError() {
+        let alert = UIAlertController(title: "No schedule available", message: "There is no schedule information available now. Please check your internet connection and try again later.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.close(self)
+        })
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
@@ -122,7 +165,6 @@ class ScheduleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dayItem = schedule[displayDay]
-        print("display day = \(displayDay)")
         let eventItem = dayItem.events[indexPath.row]
         let identifier = eventItem.identifier
         let eventOrTimeText = eventItem.event
@@ -161,11 +203,17 @@ class ScheduleTableViewController: UITableViewController {
     
     @IBAction func refresh(_ sender: Any) {
         scrapeSchedule { schedule in
-            self.schedule = schedule!
-            DispatchQueue.main.async {
-                self.reloadData()
-                self.numDays = self.schedule.count
-                self.configureDayButtons()
+            do {
+                self.schedule = schedule!
+                DispatchQueue.main.async {
+                    self.setDate()
+                    self.reloadData()
+                    self.numDays = self.schedule.count
+                    self.configureDayButtons()
+                }
+            }
+            catch {
+                self.noScheduleError()
             }
         }
     }
@@ -227,7 +275,6 @@ class ScheduleTableViewController: UITableViewController {
             }
         }
         return DayItem(day: dayJSON["day"].string!, events: events)
-        
     }
 }
 

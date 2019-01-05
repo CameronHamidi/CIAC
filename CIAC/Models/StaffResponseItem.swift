@@ -9,8 +9,6 @@
 import Foundation
 
 class StaffResponseItem: Codable {
-    var staffPassword: String
-    var currSession: Int
     var staffRooms: [StaffRoomsItem]
     var sessions: [String]
 }

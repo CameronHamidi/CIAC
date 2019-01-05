@@ -11,13 +11,16 @@ import Alamofire
 
 class StaffRoomsTableViewController: UITableViewController {
 
+    var curSession: Int!
     var staffResponse: StaffResponseItem!
     var selectedRow: Int!
+    var committeeTimes: [CommitteeTime]!
+    var delegate: PasswordEnterViewController?
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        refresh()
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        refresh()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +33,13 @@ class StaffRoomsTableViewController: UITableViewController {
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
+        
+        refresh(self)
     }
     
     @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
-            dismiss(animated: true, completion: nil)
+            close(self)
         }
     }
 
@@ -60,9 +65,28 @@ class StaffRoomsTableViewController: UITableViewController {
         let nameLabel = cell?.viewWithTag(1000) as! UILabel
         nameLabel.text = staffResponse.staffRooms[indexPath.row].name
         let roomLabel = cell?.viewWithTag(1001) as! UILabel
-        roomLabel.text = staffResponse.staffRooms[indexPath.row].rooms[staffResponse.currSession]
         
-        return cell!
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm a"
+        let curDate = Date()
+        for i in 0..<committeeTimes.count {
+            if curDate < dateFormatter.date(from: committeeTimes[i].end)! {
+                roomLabel.text = staffResponse.staffRooms[indexPath.row].rooms[i]
+                return cell!
+            }
+        }
+        noRoomsError()
+        return UITableViewCell()
+    }
+    
+    func noRoomsError() {
+        let alert = UIAlertController(title: "No staff rooms available", message: "There are no staff rooms available now. Please check your internet connection and try again later.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.close(self)
+        })
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -80,20 +104,34 @@ class StaffRoomsTableViewController: UITableViewController {
             let staffRoomDetailViewController = segue.destination as! StaffRoomDetailViewController
             staffRoomDetailViewController.scheduleText = scheduleText
             staffRoomDetailViewController.navigationItem.title = roomItem.name
-            
         }
     }
     
-    
     @IBAction func close(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToMain", sender: self)
     }
     
-    func refresh() {
+    @IBAction func refresh(_ sender: Any) {
         scrapeStaffRooms { staffResponse in
-            self.staffResponse = staffResponse!
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            do {
+                self.staffResponse = staffResponse!
+                DispatchQueue.main.async {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+                    dateFormatter.dateFormat = "MM-dd-yyyy HH:mm a"
+                    let curDate = Date()
+                    for i in 0..<self.committeeTimes.count {
+                        if curDate < dateFormatter.date(from: self.committeeTimes[i].end)! {
+                            self.curSession = i
+                            self.tableView.reloadData()
+                            return
+                        }
+                    }
+                    self.noRoomsError()
+                }
+            } catch {
+                print(error.localizedDescription)
+                self.noRoomsError()
             }
         }
     }
@@ -107,7 +145,6 @@ class StaffRoomsTableViewController: UITableViewController {
                 if let staffResponse = try? decoder.decode(StaffResponseItem.self, from: data) {
                     completion(staffResponse)
                 } else {
-                    print("error")
                     completion(nil)
                 }
             case .failure(let error):

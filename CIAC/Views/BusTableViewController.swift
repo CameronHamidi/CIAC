@@ -16,6 +16,8 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     @IBOutlet weak var prevDayButton: UIBarButtonItem!
     @IBOutlet weak var nextDayButton: UIBarButtonItem!
     var panGesture: UIPanGestureRecognizer!
+    var startDate: Date!
+    var numDays: Int!
     
     required init?(coder aDecoder: NSCoder) {
         displayDay = 0
@@ -26,6 +28,7 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
         super.viewDidLoad()
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         //view.addGestureRecognizer(panGesture)
+        setDate()
         refresh(self)
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
@@ -34,6 +37,43 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         leftSwipe.direction = .left
         view.addGestureRecognizer(leftSwipe)
+    }
+    
+    func setDate() {
+        var curDate = Date()
+        let calendar = Calendar.current
+        var curDay = calendar.component(.day, from: curDate)
+        
+        if curDate < startDate {
+            displayDay = 0
+            return
+        }
+        
+        print(startDate)
+        print(curDate)
+        
+        for i in 1..<numDays {
+            var newDate = calendar.date(byAdding: .day, value: i, to: startDate)
+            if curDate < newDate! {
+                displayDay = i - 1
+                return
+            }
+        }
+        if curDate < calendar.date(byAdding: .day, value: numDays, to: startDate)! {
+            displayDay = numDays - 1
+            return
+        }
+        noBusesError()
+        
+    }
+    
+    func noBusesError() {
+        let alert = UIAlertController(title: "No buses available", message: "There is no bus information available now. Please check your internet connection and try again later.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.close(self)
+            })
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
@@ -186,9 +226,15 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
     
     @IBAction func refresh(_ sender: Any) {
         scrapeBuses { busResponse in
-            self.busResponse = busResponse
-            DispatchQueue.main.async {
-                self.reloadData()
+            do {
+                self.busResponse = busResponse
+                DispatchQueue.main.async {
+                    self.reloadData()
+                    self.configureDayButtons()
+                }
+            } catch {
+                print(error.localizedDescription)
+                self.noBusesError()
             }
         }
     }

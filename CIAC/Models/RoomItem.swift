@@ -9,8 +9,6 @@
 import Foundation
 
 class RoomResponse: Codable {
-    var session: Int
-    var numSessions: Int
     var rooms: [RoomItem]
     var sessions: [String]
 }

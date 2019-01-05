@@ -15,6 +15,8 @@ class HeadDelTableViewController: UITableViewController {
     var correctPassword: String?
     var secretariatInfo: [SecretariatInfoResponse]!
     var meetings: [MeetingItem]!
+    var delegate: PasswordEnterViewController?
+    var meetingViewController: HeadDelMeetingsTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,7 @@ class HeadDelTableViewController: UITableViewController {
     
     @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
-            dismiss(animated: true, completion: nil)
+            close(self)
         }
     }
 
@@ -55,7 +57,7 @@ class HeadDelTableViewController: UITableViewController {
 
     
     @IBAction func close(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToMain", sender: self)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,15 +86,16 @@ class HeadDelTableViewController: UITableViewController {
         } else if segue.identifier == "showHeadDelMeetings" {
             let destination = segue.destination as! HeadDelMeetingsTableViewController
             destination.meetings = meetings
+            meetingViewController = destination
         }
     }
     
     func refresh() {
-        print("configure")
         scrapeInfo { headDelData in
             self.meetings = headDelData!.meetings
             self.secretariatInfo = headDelData!.secretariatInfo
-            DispatchQueue.main.async {                
+            DispatchQueue.main.async {
+                self.meetingViewController?.meetings = self.meetings
             }
         }
     }
@@ -104,11 +107,9 @@ class HeadDelTableViewController: UITableViewController {
             case .success(let data):
                 do {
                     let decoder = JSONDecoder()
-                    print(data)
                     let headDelData = try decoder.decode(HeadDelDataResponse.self, from: data)
                     completion(headDelData)
                 } catch {
-                    print("here")
                     completion(nil)
                 }
             case .failure(let error):

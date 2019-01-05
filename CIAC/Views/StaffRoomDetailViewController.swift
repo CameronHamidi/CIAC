@@ -12,12 +12,12 @@ class StaffRoomDetailViewController: UIViewController {
 
     
     @IBOutlet weak var scheduleTextView: UITextView!
-    var scheduleText: String
+    var scheduleText: String!
     
-    required init?(coder aDecoder: NSCoder) {
-        scheduleText = ""
-        super.init(coder: aDecoder)
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        scheduleText = ""
+//        super.init(coder: aDecoder)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,8 @@ class StaffRoomDetailViewController: UIViewController {
     }
     
     @IBAction func close(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
 }
