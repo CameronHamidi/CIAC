@@ -38,7 +38,8 @@ class MeetingDetailViewController: UIViewController {
     
     @IBAction func close(_ sender: Any) {
 //        navigationController?.popViewController(animated: true)
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToMain", sender: self)
     }
 
 }

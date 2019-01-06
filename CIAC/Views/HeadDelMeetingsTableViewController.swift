@@ -84,13 +84,16 @@ class HeadDelMeetingsTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var destination = segue.destination as! MeetingDetailViewController
-        destination.event = detailViewDisplayMeeting!
+        if segue.identifier == "showMeetingDetailView" {
+            var destination = segue.destination as! MeetingDetailViewController
+            destination.event = detailViewDisplayMeeting!
+        }
     }
     
     @IBAction func close(_ sender: Any) {
 //        navigationController?.popViewController(animated: true)
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToMain", sender: self)
     }
     
 //    func getMeetingData() {

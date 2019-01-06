@@ -26,7 +26,9 @@ class SecretariatInfoViewController: UIViewController, MFMailComposeViewControll
     var secretariatInfo: [SecretariatInfoResponse]!
     
     @IBAction func close(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
+//        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "unwindToMain", sender: self)
     }
     
     @IBAction func emailButton(_ sender: Any) {
