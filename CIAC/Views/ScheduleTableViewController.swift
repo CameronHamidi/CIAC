@@ -42,8 +42,9 @@ class ScheduleTableViewController: UITableViewController {
         self.prevDayButton.isEnabled = false
         self.nextDayButton.isEnabled = false
         
-        setDate()
-        refresh(self)
+        if setDate() {
+            refresh(self)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,31 +54,28 @@ class ScheduleTableViewController: UITableViewController {
         super.init(coder: aDecoder)
     }
     
-    func setDate() {
+    func setDate() -> Bool {
         var curDate = Date()
         let calendar = Calendar.current
         var curDay = calendar.component(.day, from: curDate)
         if curDate < startDate {
             displayDay = 0
-            return
+            return true
         }
-        
-        print(startDate)
-        print(curDate)
-        print(curDate < startDate)
         
         for i in 1..<numDays {
             var newDate = calendar.date(byAdding: .day, value: i, to: startDate)
             if curDate < newDate! {
                 displayDay = i - 1
-                return
+                return true
             }
         }
         if curDate < calendar.date(byAdding: .day, value: numDays, to: startDate)! {
             displayDay = numDays - 1
-            return
+            return true
         }
         noScheduleError()
+        return false
         
     }
     

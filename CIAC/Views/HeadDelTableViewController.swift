@@ -10,8 +10,10 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
+
 class HeadDelTableViewController: UITableViewController {
 
+    var committeeTimes: [CommitteeTime]!
     var correctPassword: String?
     var secretariatInfo: [SecretariatInfoResponse]!
     var meetings: [MeetingItem]!
@@ -55,7 +57,6 @@ class HeadDelTableViewController: UITableViewController {
         return 2
     }
 
-    
     @IBAction func close(_ sender: Any) {
         performSegue(withIdentifier: "unwindToMain", sender: self)
     }
@@ -91,13 +92,32 @@ class HeadDelTableViewController: UITableViewController {
     }
     
     func refresh() {
-        scrapeInfo { headDelData in
-            self.meetings = headDelData!.meetings
-            self.secretariatInfo = headDelData!.secretariatInfo
-            DispatchQueue.main.async {
-                self.meetingViewController?.meetings = self.meetings
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm a"
+        let curDate = Date()
+        for i in 0..<self.committeeTimes.count {
+            if curDate < dateFormatter.date(from: self.committeeTimes[i].end)! {
+                scrapeInfo { headDelData in
+                    self.meetings = headDelData!.meetings
+                    self.secretariatInfo = headDelData!.secretariatInfo
+                    DispatchQueue.main.async {
+                        self.meetingViewController?.meetings = self.meetings
+                    }
+                }
+                return
             }
         }
+        noInfoError()
+    }
+    
+    func noInfoError() {
+        let alert = UIAlertController(title: "No head delegate available", message: "There is no head delegate information available now. Please check your internet connection and try again later.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: { action in
+            self.close(self)
+        })
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     func scrapeInfo(completion: @escaping (HeadDelDataResponse?) -> Void) {

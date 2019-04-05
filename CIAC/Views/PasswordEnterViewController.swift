@@ -27,6 +27,10 @@ class PasswordEnterViewController: UIViewController {
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var passwordEnterField: UITextField!
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -69,8 +73,21 @@ class PasswordEnterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        passwordLabel.text = "Enter the \(passwordType!) password:"
-        // Do any additional setup after loading the view.
+        switch passwordType!{
+        case .headDel:
+            passwordLabel.text = "Enter the head delegate password:"
+        case .staff:
+            passwordLabel.text = "Enter the staff password."
+        }
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
+    }
+    
+    @objc func handleSwipes(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {
