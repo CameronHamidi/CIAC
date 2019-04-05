@@ -102,7 +102,8 @@ class ViewController: UIViewController, EnterPassword {
                 enterPasswordController.correctPassword = staffPasswordScraped
             }
         } else if segue.identifier == "showHeadDelTableView" {
-            let headDelController = segue.destination as! HeadDelTableViewController
+            let navController = segue.destination as! UINavigationController
+            let headDelController = navController.childViewControllers[0] as! HeadDelTableViewController
             headDelController.committeeTimes = self.committeeTimes
         } else if segue.identifier == "enterStaffPassword" {
             let enterPasswordController = segue.destination as! PasswordEnterViewController

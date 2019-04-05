@@ -28,8 +28,9 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
         super.viewDidLoad()
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         //view.addGestureRecognizer(panGesture)
-        setDate()
-        refresh(self)
+        if setDate() {
+            refresh(self)
+        }
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
@@ -39,14 +40,14 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
         view.addGestureRecognizer(leftSwipe)
     }
     
-    func setDate() {
+    func setDate() -> Bool {
         var curDate = Date()
         let calendar = Calendar.current
         var curDay = calendar.component(.day, from: curDate)
         
         if curDate < startDate {
             displayDay = 0
-            return
+            return true
         }
         
         print(startDate)
@@ -56,14 +57,15 @@ class BusTableViewController: UITableViewController, UIGestureRecognizerDelegate
             var newDate = calendar.date(byAdding: .day, value: i, to: startDate)
             if curDate < newDate! {
                 displayDay = i - 1
-                return
+                return true
             }
         }
         if curDate < calendar.date(byAdding: .day, value: numDays, to: startDate)! {
             displayDay = numDays - 1
-            return
+            return true
         }
         noBusesError()
+        return false
         
     }
     
